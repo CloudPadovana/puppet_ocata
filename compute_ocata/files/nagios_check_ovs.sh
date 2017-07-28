@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Nagios server
+nagios_server=""
+#
+# Nagios client confifuration file
+nagios_conf="/etc/nagios/send_nsca.cfg"
+#
+hostname=`/bin/hostname -s`
+#
+ovs_status=`/usr/bin/systemctl status openvswitch | tr '\n' ';'`
+ovs_status_retcode=$?
+overall_msg=${ovs_status}
+if [ $ovs_status_retcode -ne 0 ]; then
+  echo -e "$hostname\tOpenvSwitch\t2\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf}
+  exit
+fi
+
+ovs_ofctl_out=`ovs-ofctl dump-flows br-tun`
+
+if [[ ${ovs_ofctl_out} == *table=0* ]] && [[ ${ovs_ofctl_out} == *actions=resubmit* ]]; then
+  overall_msg="${overall_msg} String 'table=0' 'actions=resubmit' found in ovs_ofctl outputput;"
+  ret2code=0
+else
+  overall_msg="${overall_msg} String 'table=0' 'actions=resubmit' NOT found in ovs_ofctl outputput;"
+  ret2code=2
+fi
+
+if [ $ret2code == 2 ]; then
+   retcode=2
+   overall_msg="${overall_msg} Restarting neutron-openvswitch-agent"
+   /usr/bin/systemctl stop neutron-openvswitch-agent
+   /usr/bin/systemctl stop openvswitch
+   /bin/sleep 5
+   /usr/bin/systemctl start openvswitch
+   /usr/bin/systemctl start neutron-openvswitch-agent
+else
+   retcode=0
+fi
+echo -e "$hostname\tOpenvSwitch\t${retcode}\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf}
+

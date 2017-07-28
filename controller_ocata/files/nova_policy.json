@@ -1,0 +1,10 @@
+{
+"os_compute_api:servers:delete": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:os-pause-server:pause": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:servers:rebuild": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:servers:resize": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:servers:stop": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:os-suspend-server:resume": "rule:admin_api or user_id:%(user_id)s",
+"os_compute_api:os-suspend-server:suspend": "rule:admin_api or user_id:%(user_id)s",
+}
+

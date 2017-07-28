@@ -1,0 +1,6 @@
+name    'controller_ocata'
+version '1.0.0'
+author  'M. Sgaravatto'
+license 'Apache License 2.0'
+summary 'OpenStack CentOS 7 Mitaka Controller node configuration for the INFN Cloud area Padovana'
+description  'Puppet module to install and configure a CentOS 7 Openstack Ocata Controller node for the INFN Cloud Area Padovana'
