@@ -5,6 +5,7 @@ class controller_ocata::params ($cloud_role){
 
    ##########################################
    # Cloud di produzione
+   $site_fqdn = "cloud-areapd.pd.infn.it"
    $admin_password = ''
    $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
@@ -67,6 +68,7 @@ class controller_ocata::params ($cloud_role){
 
    ##########################################
    # Cloud di test
+   $site_fqdn = "cloud-areapd-test.pd.infn.it"
    $admin_password = ''
    $admin_tenant_name = ''
    $admin_token = ''
@@ -269,5 +271,21 @@ class controller_ocata::params ($cloud_role){
 ####
    $vnc_enabled = true
    $placement_username = 'placement'
-   $enabled_apis = 'osapi_compute,metadata' 
+   $enabled_apis = 'osapi_compute,metadata'
+   
+  ############################################################################
+  #  Security params
+  ############################################################################
+
+  $host_cert = "/etc/grid-security/hostcert.pem"
+  $host_key = "/etc/grid-security/hostkey.pem"
+  $ca_file = "/etc/grid-security/certificates/INFN-CA-2015.pem"
+  $crl_file_list = [ "/etc/grid-security/certificates/49f18420.r0" ]
+
+  ############################################################################
+  #  Shibboleth params
+  ############################################################################
+
+  $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
+
 }

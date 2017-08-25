@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- BUILD BY PUPPET -->
+<SPConfig xmlns="urn:mace:shibboleth:2.0:native:sp:config"
+    xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"    
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    clockSkew="180">
+
+    <ApplicationDefaults id="default"
+                         entityID="https://<%=@site_fqdn-%>/dashboard-shib"
+                         REMOTE_USER="eppn persistent-id targeted-id">
+
+        <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+                  checkAddress="false" handlerSSL="true" cookieProps="https">
+
+            <SSO>SAML2 SAML1</SSO>
+
+            <Logout>SAML2 Local</Logout>
+            
+            <Handler type="MetadataGenerator" Location="/Metadata"
+                     template="/etc/openstack-auth-shib/idem-template-metadata.xml"
+                     signing="true"/>
+                     
+            <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
+            <Handler type="Session" Location="/Session" showAttributeValues="false"/>
+            <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
+        </Sessions>
+
+        <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
+       
+        <MetadataProvider type="Chaining">
+            <MetadataProvider type="XML"
+                              uri="https://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
+                              backingFilePath="/var/cache/shibboleth/idem-metadata.xml"
+                              reloadInterval="7200"/>
+        </MetadataProvider>
+        
+        <AttributeExtractor type="XML" 
+                            validate="true"
+                            reloadChanges="false"
+                            path="/usr/share/openstack-auth-shib/attribute-map.xml"/>
+        <AttributeResolver type="Query" subjectMatch="true"/>
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
+
+        <CredentialResolver type="File">
+            <Key><Path>/etc/shibboleth/sp-key.pem</Path></Key>
+            <Certificate>
+                <Path>/etc/shibboleth/sp-cert.pem</Path>
+                <Path><%=@ca_file-%></Path>
+            </Certificate>
+            <CRL>
+<% @crl_file_list.each do | crl_file | -%>
+                <Path><%=crl_file-%></Path>
+<% end -%>
+            </CRL>
+        </CredentialResolver>
+
+    </ApplicationDefaults>
+    
+    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
+    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
+
+</SPConfig>
+
