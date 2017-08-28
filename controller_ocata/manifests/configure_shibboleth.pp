@@ -28,6 +28,15 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     require  => Package["shibboleth"],
   }
 
+  file { "/etc/shibboleth/attribute-map.xml":
+    ensure   => file,
+    owner    => "root",
+    group    => "root",
+    mode     => '0644',
+    source   => "puppet:///modules/controller_ocata/attribute-map.xml"
+    require  => Package["shibboleth"],
+  }
+
   file { "/etc/shibboleth/shibboleth2.xml":
     ensure   => file,
     owner    => "shibd",
