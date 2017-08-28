@@ -6,6 +6,7 @@ class controller_ocata::params ($cloud_role){
    ##########################################
    # Cloud di produzione
    $site_fqdn = "cloud-areapd.pd.infn.it"
+   $for_production = true
    $admin_password = ''
    $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
@@ -69,6 +70,7 @@ class controller_ocata::params ($cloud_role){
    ##########################################
    # Cloud di test
    $site_fqdn = "cloud-areapd-test.pd.infn.it"
+   $for_production = false
    $admin_password = ''
    $admin_tenant_name = ''
    $admin_token = ''
@@ -287,5 +289,6 @@ class controller_ocata::params ($cloud_role){
   ############################################################################
 
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
+  $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
 
 }

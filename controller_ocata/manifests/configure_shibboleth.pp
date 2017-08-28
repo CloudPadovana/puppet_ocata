@@ -37,6 +37,15 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     require  => Package["shibboleth"],
   }
 
+  file { "/etc/shibboleth/idem-template-metadata.xml":
+    ensure   => file,
+    owner    => "root",
+    group    => "root",
+    mode     => '0644',
+    content  => template("controller_ocata/idem-template-metadata.xml.erb"),
+    require  => Package["shibboleth"],
+  }
+
   file { "/etc/shibboleth/shibboleth2.xml":
     ensure   => file,
     owner    => "shibd",
