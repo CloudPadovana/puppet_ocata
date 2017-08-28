@@ -293,6 +293,7 @@ class controller_ocata::params ($cloud_role){
   #  Shibboleth params
   ############################################################################
 
+  $enable_shib = true
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
   $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
   
@@ -306,6 +307,7 @@ class controller_ocata::params ($cloud_role){
   #  OpenID Connect params
   ############################################################################
 
+  $enable_oidc = false
   $oidc_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/misc-centos7.repo"
   $oidc_passphrase = ""
   
