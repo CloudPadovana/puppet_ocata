@@ -1,0 +1,26 @@
+DATABASES = {
+    'default': {
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME' : '<%=@aai_db_name-%>',
+        'USER' : '<%=@aai_db_user-%>',
+        'PASSWORD' : '<%=@aai_db_pwd-%>',
+        'HOST' : '<%=@aai_db_host-%>',
+        'PORT' : '<%=@aai_db_port-%>'
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '<%=@aai_mail_host->'
+EMAIL_PORT = <%=@aai_mail_port->
+<% unless @aai_mail_user == "" -%>
+EMAIL_HOST_USER = '<%=@aai_mail_user->'
+<% end -%>
+<% unless @aai_mail_pwd == "" -%>
+EMAIL_HOST_PASSWORD = '<%=@aai_mail_pwd->'
+<% end -%>
+SERVER_EMAIL = '<%=@aai_mail_sender->'
+MANAGERS = (
+<% @aai_mail_admins.each do | admin_descr, admin_addr | -%>
+('<%=admin_descr-%>', '<%=admin_addr-%>'),
+<% end -%>
+)

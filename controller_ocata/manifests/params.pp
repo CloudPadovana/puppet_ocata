@@ -288,6 +288,19 @@ class controller_ocata::params ($cloud_role){
   ############################################################################
   
   $enable_aai_ext = false
+  $cap_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/openstack-security-integrations_centos7_ocata.repo"
+  $aai_db_host = ""
+  $aai_db_port = 0
+  $aai_db_name = ""
+  $aai_db_user = ""
+  $aai_db_pwd = ""
+  
+  $aai_mail_host = ""
+  $aai_mail_port = 25
+  $aai_mail_user = ""
+  $aai_mail_pwd = ""
+  $aai_mail_sender = ""
+  $aai_mail_admins = {}
 
   ############################################################################
   #  Shibboleth params

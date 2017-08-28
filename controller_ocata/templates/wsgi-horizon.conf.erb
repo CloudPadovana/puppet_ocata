@@ -1,0 +1,61 @@
+Listen 443
+
+<VirtualHost *:443>
+    ServerName <%=@site_fqdn%>:443
+    UseCanonicalName On
+
+    RedirectMatch permanent  ^/$ /dashboard
+    <Files ~ "\.(cgi|shtml|phtml|php3?)$">
+        SSLOptions +StdEnvVars
+    </Files>
+    <Directory "/var/www/cgi-bin">
+        SSLOptions +StdEnvVars
+    </Directory>
+
+    BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+    
+    ErrorLog "/var/log/httpd/horizon_error.log"
+    ServerSignature Off
+    CustomLog "/var/log/httpd/horizon_access.log" combined 
+
+    SSLEngine on
+    SSLProtocol all -SSLv2
+    SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile <%=@host_cert%>
+    SSLCertificateKeyFile <%=@host_key%>
+
+    WSGIDaemonProcess apache group=apache processes=3 threads=10 user=apache
+    WSGIProcessGroup apache
+    WSGISocketPrefix run/wsgi
+    WSGIScriptAlias /dashboard "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+
+    Alias /dashboard/static /usr/share/openstack-dashboard/static
+
+    <Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
+      Options All
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+    <Directory /usr/share/openstack-dashboard/static>
+      Options All
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+<% if @enable_aai_ext and @enable_shib -%>
+    WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+
+    <Location /dashboard-infn>
+        AuthType shibboleth
+        ShibRequestSetting requireSession 1
+        require shib-session
+        ShibRequestSetting applicationId default
+        ShibRequestSetting target https://<%=@site_fqdn%>/dashboard-infn/auth/login/
+        ShibRequestSetting entityID <%=@infnaai_ent_id%>
+    </Location>
+<% end -%>
+
+</VirtualHost>
+
+
