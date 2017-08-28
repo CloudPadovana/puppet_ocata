@@ -15,8 +15,8 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "shibd",
     group    => "shibd",
     mode     => '0400',
-    source   => "${host_key}"
-    require  => Package["shibboleth"],
+    source   => "${host_key}",
+    tag      => ["shibboleth_sec"],
   }
 
   file { "/etc/shibboleth/sp-cert.pem":
@@ -24,8 +24,8 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "shibd",
     group    => "shibd",
     mode     => '0600',
-    source   => "${host_cert}"
-    require  => Package["shibboleth"],
+    source   => "${host_cert}",
+    tag      => ["shibboleth_sec"],
   }
 
   file { "/etc/shibboleth/attribute-map.xml":
@@ -33,8 +33,8 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     owner    => "root",
     group    => "root",
     mode     => '0644',
-    source   => "puppet:///modules/controller_ocata/attribute-map.xml"
-    require  => Package["shibboleth"],
+    source   => "puppet:///modules/controller_ocata/attribute-map.xml",
+    tag      => ["shibboleth_conf"],
   }
 
   file { "/etc/shibboleth/idem-template-metadata.xml":
@@ -43,7 +43,7 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     group    => "root",
     mode     => '0644',
     content  => template("controller_ocata/idem-template-metadata.xml.erb"),
-    require  => Package["shibboleth"],
+    tag      => ["shibboleth_conf"],
   }
 
   file { "/etc/shibboleth/shibboleth2.xml":
@@ -52,7 +52,16 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     group    => "shibd",
     mode     => '0640',
     content  => template("controller_ocata/shibboleth2.xml.erb"),
-    require  => Package["shibboleth"],
+    tag      => ["shibboleth_conf"],
   }
+
+  service { "shibd":
+    ensure     => running,
+    hasstatus  => true,
+    hasrestart => true,
+  }
+  
+  Package["shibboleth"] -> File <| tag == 'shibboleth_sec' |> ~> Service["shibd"]
+  Package["shibboleth"] -> File <| tag == 'shibboleth_conf' |> ~> Service["shibd"]
 
 }
