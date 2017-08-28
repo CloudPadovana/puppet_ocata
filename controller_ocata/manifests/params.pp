@@ -291,4 +291,15 @@ class controller_ocata::params ($cloud_role){
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
   $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
 
+  ############################################################################
+  #  OpenID Connect params
+  ############################################################################
+
+  $oidc_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/misc-centos7.repo"
+  $oidc_passphrase = ""
+  
+  $indigo_md_url = "https://iam-test.indigo-datacloud.eu/.well-known/openid-configuration"
+  $indigo_client_id = ""
+  $indigo_secret = ""
+
 }
