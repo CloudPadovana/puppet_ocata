@@ -216,7 +216,6 @@ class controller_ocata::params ($cloud_role){
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
    $iscsi_volume_group = 'iscsi-infnpd'
 #####
-   $keystone_auth_methods = 'sKey,password,token'
    $keystone_verbose = false
    $keystone_token_provider = 'fernet'
    $l3_external_network_bridge = ''
@@ -285,11 +284,23 @@ class controller_ocata::params ($cloud_role){
   $crl_file_list = [ "/etc/grid-security/certificates/49f18420.r0" ]
 
   ############################################################################
+  #  AAI estensions
+  ############################################################################
+  
+  $enable_aai_ext = false
+
+  ############################################################################
   #  Shibboleth params
   ############################################################################
 
   $shib_repo_url = "http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/security:shibboleth.repo"
   $shib_info_url = "http://wiki.infn.it/progetti/cloud-areapd/home"
+  
+  if $for_production {
+    $infnaai_ent_id = "https://idp.infn.it/saml2/idp/metadata.php"
+  } else {
+    $infnaai_ent_id = "https://idp.infn.it/testing/saml2/idp/metadata.php"
+  }
 
   ############################################################################
   #  OpenID Connect params
