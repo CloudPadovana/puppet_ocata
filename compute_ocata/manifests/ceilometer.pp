@@ -41,18 +41,8 @@ class compute_ocata::ceilometer {
 #
 # ceilometer.conf
 #
-###  do_config { 'ceilometer_rpc_backend': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'rpc_backend', value => $compute_ocata::params::rpc_backend, }
-####rpc_backend sostituito da transport url vedere come si configura
-do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_ocata::params::transport_url, }
-
-####
- 
-
+  do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_ocata::params::transport_url, }
   do_config { 'ceilometer_auth_strategy': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'auth_strategy', value => $compute_ocata::params::auth_strategy, }
-###non ci sono per transport url
-####  do_config { 'ceilometer_rabbit_hosts': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $compute_ocata::params::rabbit_hosts, }
-####  do_config { 'ceilometer_rabbit_ha_queues': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $compute_ocata::params::rabbit_ha_queues, }
-
   do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $compute_ocata::params::auth_uri, }
   do_config { 'ceilometer_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_url', value => $compute_ocata::params::auth_url, }
   do_config { 'ceilometer_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_name', value => $compute_ocata::params::project_name, }               
@@ -62,7 +52,7 @@ do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', sec
   do_config { 'ceilometer_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_ocata::params::auth_type, }
   do_config { 'ceilometer_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_ocata::params::project_domain_name, }
   do_config { 'ceilometer_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $compute_ocata::params::user_domain_name, }
-###  do_config { 'ceilometer_keystone_authtoken_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'cafile', value => $compute_ocata::params::cafile, }
+  #do_config { 'ceilometer_keystone_authtoken_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'cafile', value => $compute_ocata::params::cafile, }
 
   do_config { 'ceilometer_service_credentials_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_url', value => $compute_ocata::params::ceilometer_auth_url, }
   do_config { 'ceilometer_service_credentials_username': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'username', value => $compute_ocata::params::ceilometer_username, }
@@ -72,21 +62,17 @@ do_config { 'transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', sec
   do_config { 'ceilometer_service_credentials_interface': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'interface', value => $compute_ocata::params::ceilometer_interface, }
   do_config { 'ceilometer_service_credentials_auth_type': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'auth_type', value => $compute_ocata::params::auth_type, }
 
-
 ####sulla doc ocata queste variabili sono project_domain_id e user_domain_id
   do_config { 'ceilometer_service_credentials_project_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_domain_name', value => $compute_ocata::params::project_domain_name, }
   do_config { 'ceilometer_service_credentials_user_domain_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'user_domain_name', value => $compute_ocata::params::user_domain_name, }
-#####aggiungo come da guida queste variabili
-###  do_config { 'ceilometer_service_credentials_project_domain_id': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'project_domain_id', value => $compute_ocata::params::project_domain_id, }
-###  do_config { 'ceilometer_service_credentials_user_domain_id': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'user_domain_id', value => $compute_ocata::params::user_domain_id, }
-#####
+do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $compute_ocata::params::cafile, }
 
-###  do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $compute_ocata::params::cafile, }
-#########                
-## do_config { 'ceilometer_telemetry_secret': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'publisher', param => 'telemetry_secret', value => $compute_ocata::params::ceilometer_telemetry_secret, }                
-## do_config { 'ceilometer_identity_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'identity_uri', value => $compute_ocata::params::ceilometer_identity_uri, }
 #############
 ###check se in nova conf in default ci sono usage audit period notify ib state change e notification driver ...vedi anche in configure.pp
 ###########check  fatto e ci sono in configure.pp
-                        
+  
+#######Proxy headers parsing
+do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_ocata::params::enable_proxy_headers_parsing, }
+
+                      
 }
