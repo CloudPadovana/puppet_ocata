@@ -1,5 +1,9 @@
 class compute_ocata::install {
+#inherits compute_ocata::params {
 
+#$cloud_role = $cloud_role::cloud_role
+$cloud_role = $compute_ocata::params::cloud_role          
+#$cloud_role= $compute_ocata::cloud_role
 #  $computepackages = [ "openstack-nova-compute",
 #                         "openstack-utils",
 #                         "openstack-neutron-openvswitch",
@@ -25,6 +29,7 @@ class compute_ocata::install {
 
   $novapackages = [ "openstack-nova-compute",
                      "openstack-nova-common" ]
+
   package { $novapackages: ensure => "installed" }
   
   $ceilometerpackages = [ "openstack-ceilometer-compute",

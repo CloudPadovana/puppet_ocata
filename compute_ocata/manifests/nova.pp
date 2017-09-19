@@ -1,9 +1,12 @@
 class compute_ocata::nova {
-
+#($compute_ocata::params::cloud_role) inherits compute_ocata::params {
 
 
 include compute_ocata::install
-
+#include compute_ocata::service
+# $cloud_role= $cloud_role::cloud_role
+#$cloud_role= $compute_ocata::cloud_role
+#$cloud_role= $compute_ocata::params::cloud_role
 
 # $novapackages = [ "openstack-nova-compute",
 #                     "openstack-nova-common" ]
@@ -44,16 +47,17 @@ include compute_ocata::install
 # nova.conf
 #
 
-####
+####aggiunto in ocata
   do_config { 'nova_enabled_apis': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'enabled_apis', value => $compute_ocata::params::nova_enabled_apis, }
 
 #####
+###  do_config { 'nova_rpc_backend': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'rpc_backend', value => $compute_ocata::params::rpc_backend, }
 ####rpc_backend e' sostituito da transport url
   do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_ocata::params::transport_url, }
 
 ####
 
-####
+####in ocata e' in api valore keystone in mita-ka e' in default
 ### do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'auth_strategy', value => $compute_ocata::params::auth_strategy, }
 
   do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $compute_ocata::params::auth_strategy, }
@@ -72,7 +76,8 @@ do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', sec
 
 
 ######
-
+#  do_config { 'nova_rabbit_hosts': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $compute_ocata::params::rabbit_hosts, }
+#  do_config { 'nova_rabbit_ha_queues': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $compute_ocata::params::rabbit_ha_queues, }
 
   do_config { 'nova_auth_type': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_ocata::params::auth_type}
   do_config { 'nova_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_ocata::params::project_domain_name, }
@@ -118,13 +123,14 @@ do_config { 'nova_placement_auth_type': conf_file => '/etc/nova/nova.conf', sect
   do_config { 'nova_neutron_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'url', value => $compute_ocata::params::neutron_url, }
   do_config { 'nova_neutron_cafile': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'cafile', value => $compute_ocata::params::cafile, }
 
-###
+###no ho trovato corrispondenza di ssl_ca_file nel file per i compute in ocata ma per controller ci sono
 #  do_config { 'nova_ssl_ca_file': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'ssl_ca_file', value => $compute_ocata::params::cafile, }
   do_config { 'nova_libvirt_inject_pass': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_password', value => $compute_ocata::params::libvirt_inject_pass, }
   do_config { 'nova_libvirt_inject_key': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_key', value => $compute_ocata::params::libvirt_inject_key, }
   do_config { 'nova_libvirt_inject_part': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_partition', value => $compute_ocata::params::libvirt_inject_part, }
 
-#######
+########non trovo live_migration_flag cpu_mode e cpu_model
+
 if $cloud_role == "is_prod_sharedstorage" or $cloud_role == "is_prod_localstorage" {
 ###   do_config { 'nova_live': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'live_migration_flag', value => $compute_ocata::params::live_migration_flag, }
   do_config { 'nova_libvirt_cpu_mode': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_mode', value => $compute_ocata::params::libvirt_cpu_mode, }
@@ -136,13 +142,16 @@ if $cloud_role == "is_prod_sharedstorage" or $cloud_role == "is_prod_localstorag
   do_config { 'nova_cinder_ssl_ca_file': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'ssl_ca_file', value => $compute_ocata::params::cafile, }
   do_config { 'nova_cinder_cafile': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'cafile', value => $compute_ocata::params::cafile, }
 
+#### per https nel compute non dovrebbe servire
+do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_ocata::params::enable_proxy_headers_parsing, }
+
 ######
 #
 # nova.conf for Ceilometer
 #
   do_config { 'nova_instance_usage_audit': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'instance_usage_audit', value => $compute_ocata::params::nova_instance_usage_audit, }
   do_config { 'nova_instance_usage_audit_period': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'instance_usage_audit_period', value => $compute_ocata::params::nova_instance_usage_audit_period, }
-  do_config { 'nova_notify_on_state_change': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'notify_on_state_change', value => $compute_ocata::params::nova_notify_on_state_change, }
-  do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'notification_driver', value => $compute_ocata::params::nova_notification_driver, }
+  do_config { 'nova_notify_on_state_change': conf_file => '/etc/nova/nova.conf', section => 'notifications', param => 'notify_on_state_change', value => $compute_ocata::params::nova_notify_on_state_change, }
+  do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_ocata::params::nova_notification_driver, }
 
 }

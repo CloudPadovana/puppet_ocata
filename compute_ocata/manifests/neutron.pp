@@ -1,4 +1,6 @@
 class compute_ocata::neutron {
+  #inherits compute_ocata::params {
+
   # include compute_ocata::params
    include compute_ocata::install
 
@@ -41,7 +43,8 @@ class compute_ocata::neutron {
        }
 
 #neutron.conf
-
+####verificare
+###  do_config { 'neutron_rpc_backend': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'rpc_backend', value => $compute_ocata::params::rpc_backend, }
 ####rpc_backend sostituito da transport url
   do_config { 'neutron_transport_url': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_ocata::params::transport_url, }
 

@@ -24,8 +24,6 @@ define remove_config ($conf_file, $section, $param, $value) {
   
 # heat.conf
 
- do_config { 'heat_verbose': conf_file => '/etc/heat/heat.conf', section => 'DEFAULT', param => 'verbose', value => $controller_ocata::params::heat_verbose, }
- 
 do_config { 'heat_transport_url': conf_file => '/etc/heat/heat.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, } 
  ###
   do_config { 'heat_metadata_server_url': conf_file => '/etc/heat/heat.conf', section => 'DEFAULT', param => 'heat_metadata_server_url', value => $controller_ocata::params::heat_metadata_server_url, }
@@ -36,6 +34,8 @@ do_config { 'heat_transport_url': conf_file => '/etc/heat/heat.conf', section =>
 
   do_config { 'heat_db': conf_file => '/etc/heat/heat.conf', section => 'database', param => 'connection', value => $controller_ocata::params::heat_db, }
 
+#  do_config { 'heat_rabbit_hosts': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_ocata::params::rabbit_hosts, }       
+#  do_config { 'heat_rabbit_ha_queues': conf_file => '/etc/heat/heat.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_ocata::params::rabbit_ha_queues, }
 
    do_config { 'heat_auth_uri': conf_file => '/etc/heat/heat.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }   
    do_config { 'heat_auth_url': conf_file => '/etc/heat/heat.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_ocata::params::auth_url, }

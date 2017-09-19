@@ -34,9 +34,6 @@ define remove_config ($conf_file, $section, $param, $value) {
 # neutron.conf
 ### transport url
    do_config { 'neutron_transport_url': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, }
-
-   do_config { 'neutron_verbose': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'verbose', value => $controller_ocata::params::neutron_verbose, }    
-#   do_config { 'neutron_rpc_backend': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'rpc_backend', value => $controller_ocata::params::rpc_backend, }
    do_config { 'neutron_auth_strategy': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'auth_strategy', value => $controller_ocata::params::auth_strategy, }
    do_config { 'neutron_core_plugin': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'core_plugin', value => $controller_ocata::params::neutron_core_plugin, }
    do_config { 'neutron_service_plugins': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'service_plugins', value => $controller_ocata::params::neutron_service_plugins, }
@@ -52,7 +49,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 
    do_config { 'neutron_db': conf_file => '/etc/neutron/neutron.conf', section => 'database', param => 'connection', value => $controller_ocata::params::neutron_db, }
 
- 
+ #  do_config { 'neutron_rabbit_host': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_ocata::params::rabbit_hosts, }
+ #  do_config { 'neutron_rabbit_ha_queues': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_ocata::params::rabbit_ha_queues, }
+
        do_config { 'neutron_lock_path': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_ocata::params::neutron_lock_path, }
 
    do_config { 'neutron_auth_uri': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }   
@@ -111,6 +110,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 ###### 
    
+$cloud_role= $compute_ocata::params::cloud_role
+
        if $cloud_role == "is_production" { do_config { 'ml2_network_vlan_ranges': conf_file => '/etc/neutron/plugins/ml2/ml2_conf.ini', section => 'ovs', param => 'network_vlan_ranges', value => $controller_ocata::params::ml2_network_vlan_ranges, }
                                          }
               

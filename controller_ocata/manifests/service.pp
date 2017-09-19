@@ -36,6 +36,11 @@ class controller_ocata::service {
 #  class {'controller_ocata::rsyslog':}
   
   
+#   file {'INFN-CA.pem':
+#                   source      => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+#                   path        => '/etc/grid-security/certificates/INFN-CA.pem',
+#         }
+
  ## Services
 
  service { "memcached":

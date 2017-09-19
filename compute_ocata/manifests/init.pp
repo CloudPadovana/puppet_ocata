@@ -108,9 +108,9 @@ class compute_ocata {
              #subscribe   => Class['compute_ocata::nova'],
           }
 
-       file {'cafile.pem':
+       file {'INFN-CA.pem':
                       source      => 'puppet:///modules/compute_ocata/INFN-CA.pem',
-                      path        => '/etc/grid-security/certificates/cafile.pem',
+                      path        => '/etc/grid-security/certificates/INFN-CA.pem',
             }
                     
 
@@ -196,7 +196,14 @@ class compute_ocata {
                                                                                     
            
 # execution order
-###### il modulo service viene eseguito dopo l'install dei pacchetti           
+             #Class['compute_ocata::firewall'] -> Class['compute_ocata::install']
+             #Class['compute_ocata::install'] -> Class['compute_ocata::configure']
+             #Class['compute_ocata::configure'] -> File['/etc/neutron/plugin.ini']
+             #Class['compute_ocata::configure'] -> Cron['nagios_check_ovs']
+             #Class['compute_ocata::configure'] -> Cron['nagios_check_kvm']
+             #Class['compute_ocata::configure'] -> Class['compute_ocata::pwl_access']
+             #Service["openvswitch"] -> Exec['create_bridge']
+######il modulo service viene eseguito dopo l'install dei pacchetti           
              Class['compute_ocata::firewall'] -> Class['compute_ocata::install']
              Class['compute_ocata::install'] -> Class['compute_ocata::nova']
              Class['compute_ocata::nova'] -> Class['compute_ocata::neutron']

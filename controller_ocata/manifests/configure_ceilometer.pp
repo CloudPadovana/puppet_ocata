@@ -10,7 +10,7 @@ class controller_ocata::configure_ceilometer {
  $ceilometerpackages = [ "openstack-ceilometer-collector",
                          "openstack-ceilometer-notification",
                          "openstack-ceilometer-central", 
-                         "python-ceilometerclient" ]
+                         "python2-ceilometerclient" ]
 
  package { $ceilometerpackages: ensure => "installed" }
 
@@ -41,9 +41,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    ####ok
    do_config { 'ceilometer_metering_time_to_live': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'database', param => 'metering_time_to_live', value => $controller_ocata::params::ceilometer_metering_time_to_live, }
        
-   do_config { 'ceilometer_verbose': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'verbose', value => $controller_ocata::params::ceilometer_verbose, }
 ###########
-#  
+#   do_config { 'ceilometer_rpc_backend': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'rpc_backend', value => $controller_ocata::params::rpc_backend, }
 ###transport_url
 do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, }
 #############
@@ -51,8 +50,7 @@ do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer
 # See https://issues.infn.it/jira/browse/PDCL-749
    do_config { 'ceilometer_default_log_levels': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'default_log_levels', value => $controller_ocata::params::ceilometer_default_log_levels, }
 
-
-   do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }
+   #do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }
    do_config { 'ceilometer_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_ocata::params::auth_url, }
    do_config { 'ceilometer_memcached_servers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_ocata::params::memcached_servers, }
    do_config { 'ceilometer_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_ocata::params::project_name, }
@@ -75,9 +73,6 @@ do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer
    do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $controller_ocata::params::cafile,
  }
   
-# Non serve piu`
-##       do_config { 'ceilometer_telemetry_secret': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'publisher', param => 'telemetry_secret', value => $controller_ocata::params::ceilometer_telemetry_secret, }
-
   do_config { 'ceilometer_meter_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'meter_dispatchers', value => $controller_ocata::params::ceilometer_meter_dispatchers, }
    do_config { 'ceilometer_event_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'event_dispatchers', value => $controller_ocata::params::ceilometer_event_dispatchers, }
 

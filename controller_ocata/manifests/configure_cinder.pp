@@ -25,8 +25,6 @@ define remove_config ($conf_file, $section, $param, $value) {
   
 # cinder.conf
        
-   do_config { 'cinder_verbose': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'verbose', value => $controller_ocata::params::cinder_verbose, }
- #  do_config { 'cinder_rpc_backend': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'rpc_backend', value => $controller_ocata::params::rpc_backend, }       
    do_config { 'cinder_auth_strategy': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'auth_strategy', value => $controller_ocata::params::auth_strategy, }       
    do_config { 'cinder_my_ip': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_ocata::params::cinder_my_ip, }       
    do_config { 'cinder_public_endpoint': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_ocata::params::cinder_public_endpoint, }
@@ -39,6 +37,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 #######transport_url
   do_config { 'cinder_transport_url': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, }
 
+#   do_config { 'cinder_rabbit_hosts': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_hosts', value => $controller_ocata::params::rabbit_hosts, }       
+#   do_config { 'cinder_rabbit_ha_queues': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_ocata::params::rabbit_ha_queues, }
 
    do_config { 'cinder_auth_uri': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }   
    do_config { 'cinder_auth_url': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_ocata::params::auth_url, }

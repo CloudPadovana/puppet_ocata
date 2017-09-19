@@ -1,9 +1,13 @@
 class controller_ocata {
   include controller_ocata::params
 
-  $ocatapackages = [ "openstack-utils", ]
 
-  package { $ocatapackages: ensure => "installed" }
+   $ocatapackages = [ "openstack-utils",
+
+                   ]
+
+
+     package { $ocatapackages: ensure => "installed" }
   ### yum install centos-release-openstack-ocata
 
 
@@ -46,34 +50,21 @@ class controller_ocata {
   class {'controller_ocata::rsyslog':}
   
   
-  file {'cafile.pem':
-    source      => 'puppet:///modules/controller_ocata/cafile.pem',
-    path        => '/etc/grid-security/certificates/cafile.pem',
+   file {'INFN-CA.pem':
+                   source      => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+                   path        => '/etc/grid-security/certificates/INFN-CA.pem',
+         }
+
+
+
+#            Class['controller_ocata::firewall'] -> Class['compute_ocata::glance']
+             Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
+            Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
+             Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
+             Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_heat']
+             Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
+            # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
+             Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
+            
+
   }
-
-
-
-  # Class['controller_ocata::firewall'] -> Class['compute_ocata::glance']
-  Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
-  Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
-  Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
-  Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_heat']
-  Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
-  # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
-  Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
-  Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::service']
-
-  if $enable_aai_ext {
-    if $enable_shib {
-      class {'controller_ocata::configure_shibboleth': }
-    }
-
-    if $enable_oidc {
-      class {'controller_ocata::configure_openidc': }
-
-      # Restart of httpd required
-      Class['controller_ocata::configure_openidc'] -> Class['controller_ocata::service']
-    }
-  }
-
-}

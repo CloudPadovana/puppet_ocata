@@ -1,5 +1,11 @@
 class compute_ocata::ceph {
 
+#inherits compute_ocata::params {
+# include compute_ocata::params
+#  $cloud_role= $cloud_role::cloud_role  
+#$cloud_role= $compute_ocata::cloud_role
+#$cloud_role= $compute_ocata::params::cloud_role 
+$cloud_role= $compute_ocata::params::cloud_role
 
      yumrepo { "ceph":
                  baseurl             => "http://download.ceph.com/rpm-jewel/el7/$::architecture/",
@@ -34,6 +40,13 @@ class compute_ocata::ceph {
               backup      => true,
            }
          }
+
+
+       notify { 'role':
+                message  => " cloud_role is ${cloud_role} ",
+              }
+
+
      if $cloud_role == "is_test" {
       file {'secret.xml':
               source      => 'puppet:///modules/compute_ocata/secret_test.xml',
@@ -48,7 +61,7 @@ class compute_ocata::ceph {
       exec { 'get-or-set virsh secret':
               command => $cm,
               unless  => "/usr/bin/virsh secret-list | grep -i $compute_ocata::params::libvirt_rbd_secret_uuid",
-              require => [File['/etc/nova/secret.xml']]
+              require => File['secret.xml'],
             }
 
       exec { 'set-secret-value virsh':

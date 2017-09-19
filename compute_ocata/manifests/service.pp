@@ -1,4 +1,6 @@
 class compute_ocata::service {
+#inherits compute_ocata::params {
+
 # include compute_ocata::params
 
 
@@ -61,7 +63,11 @@ class compute_ocata::service {
                      require     => Service["openvswitch"],
              }
                             
-
+##$cloud_role = $cloud_role::cloud_role if $cloud_role == "is_local" o "is_shared"
+$cloud_role = $compute_ocata::params::cloud_role 
+#$cloud_role= $compute_ocata::cloud_role
+##if $cloud_role == "is_local" o "is_shared"
+# if $cloud_role == "is_local" or cloud_role ==  "is_shared" {
 
 if $cloud_role == "is_prod_localstorage" {
 # mount glusterfs volume
@@ -86,7 +92,7 @@ if $cloud_role == "is_prod_localstorage" {
              device      => "192.168.61.100:/$compute_ocata::params::volume_glusterfs",
              atboot      => true,
              fstype      => "glusterfs",
-             options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=xxx.xx.xx.xxx",
+             options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=192.168.61.101",
             require     => [ File["nova-instances"], Package ["glusterfs-fuse"] ]
          }
                                } #chiudo if
