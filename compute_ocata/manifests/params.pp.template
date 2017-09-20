@@ -33,7 +33,9 @@ class compute_ocata::params ($cloud_role) {
   $private_key          = 'id_rsa_ctrl-01'     
   $project_name         = 'services'
   $pub_key              = "ssh-rsa "
-  $volume_glusterfs     = 'volume-nova-prod'    
+  $volume_glusterfs     = 'volume-nova-prod'
+  $volume_glusterfs_ip  = 'xxxx'
+  $volume_glusterfs_log_ip = 'xxxx'
                                      }  
 
  if $cloud_role == "is_test" {

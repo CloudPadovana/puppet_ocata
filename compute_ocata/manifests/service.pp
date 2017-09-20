@@ -64,37 +64,38 @@ class compute_ocata::service {
              }
                             
 ##$cloud_role = $cloud_role::cloud_role if $cloud_role == "is_local" o "is_shared"
-$cloud_role = $compute_ocata::params::cloud_role 
+
+    $cloud_role = $compute_ocata::params::cloud_role 
+
 #$cloud_role= $compute_ocata::cloud_role
 ##if $cloud_role == "is_local" o "is_shared"
 # if $cloud_role == "is_local" or cloud_role ==  "is_shared" {
 
-if $cloud_role == "is_prod_localstorage" {
-# mount glusterfs volume
+    if $cloud_role == "is_prod_localstorage" {
+                  # mount glusterfs volume
 
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,
                             require     => Package["openstack-nova-common"],
                        }
-                             }   ##chiudo if
+                             }
 
-
- if $cloud_role == "is_prod_sharedstorage" {
+    if $cloud_role == "is_prod_sharedstorage" {
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,
                             require     => Package["openstack-nova-common"],
                        }
 
-   mount { "/var/lib/nova/instances":
-             ensure      => mounted,
-             device      => "192.168.61.100:/$compute_ocata::params::volume_glusterfs",
-             atboot      => true,
-             fstype      => "glusterfs",
-             options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=192.168.61.101",
-            require     => [ File["nova-instances"], Package ["glusterfs-fuse"] ]
-         }
-                               } #chiudo if
+                  mount { "/var/lib/nova/instances":
+                            ensure      => mounted,
+                            device      => "/$compute_ocata::params::volume_glusterfs_ip:/$compute_ocata::params::volume_glusterfs",
+                            atboot      => true,
+                            fstype      => "glusterfs",
+                            options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=/$compute_ocata::params::volume_glusterfs_log_ip",
+                            require     => [ File["nova-instances"], Package ["glusterfs-fuse"] ]
+                        }
+    }
 
 }  
