@@ -90,10 +90,10 @@ class compute_ocata::service {
 
                   mount { "/var/lib/nova/instances":
                             ensure      => mounted,
-                            device      => "/$compute_ocata::params::volume_glusterfs_ip:/$compute_ocata::params::volume_glusterfs",
+                            device      => "$compute_ocata::params::volume_glusterfs_ip:/$compute_ocata::params::volume_glusterfs",
                             atboot      => true,
                             fstype      => "glusterfs",
-                            options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=/$compute_ocata::params::volume_glusterfs_log_ip",
+                            options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=$compute_ocata::params::volume_glusterfs_log_ip",
                             require     => [ File["nova-instances"], Package ["glusterfs-fuse"] ]
                         }
     }
