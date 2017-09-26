@@ -50,10 +50,48 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
 #     }
 #  }
 
-file {'/etc/httpd/conf.d/wsgi-keystone.conf':
-              ensure      => link,
-              target      => '/usr/share/keystone/wsgi-keystone.conf',
-          }
+  ############################################################################
+  #  OS-Federation setup
+  ############################################################################
 
-     
+  if $enable_aai_ext {
+
+    do_config { 'keystone_auth_methods':
+      conf_file => '/etc/keystone/keystone.conf',
+      section   => 'auth',
+      param     => 'methods',
+      value     => 'password,token,mapped,openid',
+    }
+    
+    do_config { "keystone_federation_sso":
+      conf_file => '/etc/keystone/keystone.conf',
+      section   => 'federation',
+      param     => 'trusted_dashboard',
+      value     => 'https://${controller_ocata::params::site_fqdn}/dashboard/auth/websso/',
+    }
+
+    do_config { "keystone_shib_attr":
+      conf_file => '/etc/keystone/keystone.conf',
+      section   => 'mapped',
+      param     => 'remote_id_attribute',
+      value     => 'Shib-Identity-Provider',
+    }
+    
+    file { "/etc/httpd/conf.d/wsgi-keystone.conf":
+      ensure   => file,
+      owner    => "root",
+      group    => "root",
+      mode     => '0644',
+      content  => template("controller_ocata/wsgi-keystone.conf.erb"),
+    }
+
+  } else {
+
+    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
+      ensure => link,
+      target => '/usr/share/keystone/wsgi-keystone.conf',
+    }
+
   }
+     
+}

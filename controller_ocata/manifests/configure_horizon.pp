@@ -13,8 +13,8 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     creates => "/etc/yum.repos.d/openstack-security-integrations.repo",
   }
 
-  package { "openstack-auth-cap":
-    ensure  => present,
+  package { ["openstack-auth-cap", "openstack-auth-shib"]:
+    ensure  => latest,
     require => Exec["download_cap_repo"],
   }
   
