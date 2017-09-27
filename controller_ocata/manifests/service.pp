@@ -49,6 +49,14 @@ class controller_ocata::service {
                    hasstatus   => true,
                    hasrestart  => true,
            }
+
+ service { "fetch-crl-cron":
+                   ensure      => running,
+                   enable      => true,
+                   hasstatus   => true,
+                   hasrestart  => true,
+           }
+
          
  # Services for keystone       
     service { "httpd":
