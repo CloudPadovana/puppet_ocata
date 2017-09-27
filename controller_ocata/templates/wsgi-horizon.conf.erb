@@ -24,9 +24,9 @@ Listen 443
     SSLCertificateFile <%=@host_cert%>
     SSLCertificateKeyFile <%=@host_key%>
 
+    WSGIApplicationGroup %{GLOBAL}
     WSGIDaemonProcess apache group=apache processes=3 threads=10 user=apache
     WSGIProcessGroup apache
-    WSGISocketPrefix run/wsgi
     WSGIScriptAlias /dashboard "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
 
     Alias /dashboard/static /usr/share/openstack-dashboard/static
