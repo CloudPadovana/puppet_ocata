@@ -33,6 +33,15 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     mode     => '0644',
     content  => template("controller_ocata/ssl.conf.erb"),
   }
+ 
+  file { "/etc/openstack-dashboard/local_settings":
+    ensure   => file,
+    owner    => "root",
+    group    => "apache",
+    mode     => '0640',
+    content  => template("controller_ocata/local_settings.erb"),
+  }
+
 
   ### DB Creation if not exist and grant privileges.
 
