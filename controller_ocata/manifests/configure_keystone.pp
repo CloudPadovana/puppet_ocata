@@ -84,6 +84,11 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       mode     => '0644',
       content  => template("controller_ocata/wsgi-keystone.conf.erb"),
     }
+    
+    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
+      ensure => link,
+      target => '/usr/share/keystone/wsgi-keystone.conf',
+    }
 
   } else {
 
