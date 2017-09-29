@@ -14,6 +14,27 @@ $cloud_role = $compute_ocata::params::cloud_role
 #                         "ipset",
 #                         "sysfsutils" ]
 
+### Repository settings (remove old rpm and install new one)
+#
+  
+  $oldrelease = 'centos-release-openstack-mitaka'
+  $newrelease = 'centos-release-openstack-ocata'
+
+  package { $oldrelease :
+    ensure => 'absent',
+    before => Package[$newrelease],
+  } 
+
+  package { $oldrelease :
+    ensure => 'purged',
+    before => Package[$newrelease],
+  }
+ 
+  package { $newrelease :
+    ensure => 'installed',
+  } 
+
+## Install generic packages
   $genericpackages = [   "openstack-utils",
                          "yum-plugin-priorities",
                          "ipset",
