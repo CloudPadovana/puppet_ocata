@@ -1,4 +1,4 @@
-class controller_ocata::configure_keystone {
+class controller_ocata::configure_keystone inherits controller_ocata::params {
 
 #
 # Questa classe:
@@ -50,6 +50,20 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
 #     }
 #  }
 
+   file { "/usr/share/keystone/wsgi-keystone.conf":
+     ensure   => file,
+     owner    => "root",
+     group    => "root",
+     mode     => '0644',
+     content  => template("controller_ocata/wsgi-keystone.conf.erb"),
+   }
+
+   file { '/etc/httpd/conf.d/wsgi-keystone.conf':
+     ensure => link,
+     target => '/usr/share/keystone/wsgi-keystone.conf',
+   }
+
+  
   ############################################################################
   #  OS-Federation setup
   ############################################################################
@@ -67,7 +81,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
-      value     => 'https://${controller_ocata::params::site_fqdn}/dashboard/auth/websso/',
+      value     => 'https://${site_fqdn}/dashboard/auth/websso/',
     }
 
     do_config { "keystone_shib_attr":
@@ -77,25 +91,6 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       value     => 'Shib-Identity-Provider',
     }
     
-    file { "/etc/httpd/conf.d/wsgi-keystone.conf":
-      ensure   => file,
-      owner    => "root",
-      group    => "root",
-      mode     => '0644',
-      content  => template("controller_ocata/wsgi-keystone.conf.erb"),
-    }
-    
-    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
-      ensure => link,
-      target => '/usr/share/keystone/wsgi-keystone.conf',
-    }
-
-  } else {
-
-    file { '/etc/httpd/conf.d/wsgi-keystone.conf':
-      ensure => link,
-      target => '/usr/share/keystone/wsgi-keystone.conf',
-    }
 
   }
      

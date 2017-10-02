@@ -1,4 +1,4 @@
-class controller_ocata::configure_cinder {
+class controller_ocata::configure_cinder inherits controller_ocata::params {
 
 #
 # Questa classe:

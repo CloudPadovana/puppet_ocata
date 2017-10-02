@@ -53,7 +53,7 @@
             <Key><Path>/etc/shibboleth/sp-key.pem</Path></Key>
             <Certificate>
                 <Path>/etc/shibboleth/sp-cert.pem</Path>
-                <Path><%=@ca_file-%></Path>
+                <Path><%=@cafile-%></Path>
             </Certificate>
             <CRL>
 <% @crl_file_list.each do | crl_file | -%>

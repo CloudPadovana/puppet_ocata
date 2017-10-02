@@ -1,4 +1,4 @@
-class controller_ocata::configure_ceilometer {
+class controller_ocata::configure_ceilometer inherits controller_ocata::params {
 
 #
 # Questa classe:

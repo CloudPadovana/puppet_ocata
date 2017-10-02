@@ -1,4 +1,4 @@
-class controller_ocata::service {
+class controller_ocata::service inherits controller_ocata::params {
   
 
   # Ceph

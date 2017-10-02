@@ -10,17 +10,18 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = '<%=@aai_mail_host->'
-EMAIL_PORT = <%=@aai_mail_port->
+EMAIL_HOST = '<%=@aai_mail_host-%>'
+EMAIL_PORT = <%=@aai_mail_port-%>
+
 <% unless @aai_mail_user == "" -%>
-EMAIL_HOST_USER = '<%=@aai_mail_user->'
+EMAIL_HOST_USER = '<%=@aai_mail_user-%>'
 <% end -%>
 <% unless @aai_mail_pwd == "" -%>
-EMAIL_HOST_PASSWORD = '<%=@aai_mail_pwd->'
+EMAIL_HOST_PASSWORD = '<%=@aai_mail_pwd-%>'
 <% end -%>
-SERVER_EMAIL = '<%=@aai_mail_sender->'
+SERVER_EMAIL = '<%=@aai_mail_sender-%>'
 MANAGERS = (
-<% @aai_mail_admins.each do | admin_descr, admin_addr | -%>
-('<%=admin_descr-%>', '<%=admin_addr-%>'),
+<% @aai_mail_admins.each do | aii_mail_admin | -%>
+ <%=aii_mail_admin-%>,
 <% end -%>
 )

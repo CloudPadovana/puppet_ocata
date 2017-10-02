@@ -2,8 +2,7 @@ Listen 5000
 Listen 35357
 
 <VirtualHost *:5000>
-    ServerName <%=@controller_ocata::params::site_fqdn%>:5000
-    UseCanonicalName On
+    ServerName https://<%=@site_fqdn -%>:5000
 
     WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
     WSGIProcessGroup keystone-public
@@ -27,14 +26,14 @@ Listen 35357
         </IfVersion>
     </Directory>
 
-<% if @controller_ocata::params::enable_aai_ext -%>
+<% if @enable_aai_ext -%>
     # INFN AAI setup
     <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
         AuthType shibboleth
         Require shib-session
         ShibRequestSetting requireSession 1
         ShibRequestSetting applicationId default
-        ShibRequestSetting entityID <%=@controller_ocata::params::infnaai_ent_id%>
+        ShibRequestSetting entityID <%=@infnaai_ent_id%>
         ShibRequireSession On
         ShibExportAssertion Off
     </Location>
@@ -42,8 +41,6 @@ Listen 35357
 </VirtualHost>
 
 <VirtualHost *:35357>
-    ServerName <%=@controller_ocata::params::site_fqdn%>:35357
-    UseCanonicalName On
 
     WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
     WSGIProcessGroup keystone-admin
@@ -87,4 +84,3 @@ Alias /identity_admin /usr/bin/keystone-wsgi-admin
     WSGIApplicationGroup %{GLOBAL}
     WSGIPassAuthorization On
 </Location>
-

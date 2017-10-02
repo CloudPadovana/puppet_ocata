@@ -39,6 +39,19 @@ class controller_ocata {
 
   # Configure ceilometer
   class {'controller_ocata::configure_ceilometer':}
+
+  # Configure ceilometer
+  class {'controller_ocata::configure_horizon':}
+
+  # Configure Shibboleth if AII and Shibboleth are enabled
+  if ($enable_aai_ext and $enable_shib)  {
+    class {'controller_ocata::configure_shibboleth':}
+  }
+
+  # Configure OpenIdc if AII and openidc are enabled
+  if ($enable_aai_ext and $enable_oidc)  {
+    class {'controller_ocata::configure_openidc':}
+  }
  
   # Service
   class {'controller_ocata::service':}
@@ -59,13 +72,21 @@ class controller_ocata {
 
 
 
-#            Class['controller_ocata::firewall'] -> Class['compute_ocata::glance']
-             Class['controller_ocata::installca'] -> Class['compute_ocata::glance']
+#            Class['controller_ocata::firewall'] -> Class['controller_ocata::configure_glance']
+             Class['controller_ocata::installca'] -> Class['controller_ocata::configure_keystone']
+             Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::configure_glance']
              Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
              Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
              Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
-             Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_heat']
+             Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_horizon']
+             Class['controller_ocata::configure_horizon'] -> Class['controller_ocata::configure_heat']
              Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
+             if ($enable_aai_ext and $enable_shib)  {
+               Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_shibboleth']
+             }
+             if ($enable_aai_ext and $enable_oidc) {
+                Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_openidc']
+             }
             # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
              Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
             

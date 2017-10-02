@@ -1,4 +1,4 @@
-class controller_ocata::configure_shibboleth inherits controller_ocata::params {
+class controller_ocata::configure_openidc inherits controller_ocata::params {
 
   exec { "download_oidc_repo":
     command => "/usr/bin/wget -q -O /etc/yum.repos.d/mod_auth_openidc.repo ${oidc_repo_url}",
@@ -38,7 +38,7 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
   #  INDIGO IAM
   ############################################################################
 
-  exec { "download_oidc_repo":
+  exec { "download_metadata_indigo":
     command => "/usr/bin/wget -q -O /var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider ${indigo_md_url}",
     creates => "/var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider",
     require => File["/var/lib/mod_auth_openidc/metadata"],

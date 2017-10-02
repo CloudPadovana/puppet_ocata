@@ -1,4 +1,4 @@
-class controller_ocata::configure_ec2 {
+class controller_ocata::configure_ec2 inherits controller_ocata::params {
 
 #
 # Questa classe:

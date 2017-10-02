@@ -1,4 +1,4 @@
-class controller_ocata::configure_neutron {
+class controller_ocata::configure_neutron inherits controller_ocata::params {
 
 #
 # Questa classe:
