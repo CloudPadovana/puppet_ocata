@@ -1,4 +1,6 @@
-class compute_ocata::rsyslog {
+class compute_ocata::rsyslog inherits compute_ocata::params {
+
+#include compute_ocata::params
 
   $rsyslogpackages = [ "rsyslog" ]
   

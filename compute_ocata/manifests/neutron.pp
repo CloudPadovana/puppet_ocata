@@ -1,8 +1,7 @@
-class compute_ocata::neutron {
-  #inherits compute_ocata::params {
+class compute_ocata::neutron inherits compute_ocata::params {
 
-  # include compute_ocata::params
-   include compute_ocata::install
+# include compute_ocata::params
+ include compute_ocata::install
 
 # $neutronpackages = [   "openstack-neutron-openvswitch",
 #                         "openstack-neutron-common",
@@ -25,6 +24,11 @@ class compute_ocata::neutron {
           require    => Package["openstack-neutron-openvswitch"],
        }
 
+  file {'/etc/neutron/plugin.ini':
+            ensure      => link,
+            target      => '/etc/neutron/plugins/ml2/ml2_conf.ini',
+            require     => Package['openstack-neutron-ml2']
+       }
 
   define do_config ($conf_file, $section, $param, $value) {
            exec { "${name}":

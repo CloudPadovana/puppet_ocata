@@ -1,10 +1,9 @@
-class compute_ocata::service {
-#inherits compute_ocata::params {
-
-# include compute_ocata::params
-
+class compute_ocata::service inherits compute_ocata::params {
+#include compute_ocata::params
 
 # Services needed
+
+       Service["openvswitch"] -> Exec['create_bridge']
 
        service { "openvswitch":
                         ensure      => running,
@@ -58,20 +57,13 @@ class compute_ocata::service {
                 }
 
         exec { 'create_bridge':
-                     command     => "ovs-vsctl add-br br-int",
-                     unless      => "ovs-vsctl br-exists br-int",
+                     command     => "/usr/bin/ovs-vsctl add-br br-int",
+                     unless      => "/usr/bin/ovs-vsctl br-exists br-int",
                      require     => Service["openvswitch"],
              }
                             
-##$cloud_role = $cloud_role::cloud_role if $cloud_role == "is_local" o "is_shared"
 
-    $cloud_role = $compute_ocata::params::cloud_role 
-
-#$cloud_role= $compute_ocata::cloud_role
-##if $cloud_role == "is_local" o "is_shared"
-# if $cloud_role == "is_local" or cloud_role ==  "is_shared" {
-
-    if $cloud_role == "is_prod_localstorage" {
+    if $::compute_ocata::cloud_role == "is_prod_localstorage" {
                   # mount glusterfs volume
 
                   file { 'nova-instances':
@@ -81,7 +73,7 @@ class compute_ocata::service {
                        }
                              }
 
-    if $cloud_role == "is_prod_sharedstorage" {
+    if $::compute_ocata::cloud_role == "is_prod_sharedstorage" {
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
                             ensure      => directory,
@@ -98,4 +90,4 @@ class compute_ocata::service {
                         }
     }
 
-}  
+}

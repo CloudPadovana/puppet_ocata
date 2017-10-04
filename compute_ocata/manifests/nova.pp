@@ -1,12 +1,8 @@
-class compute_ocata::nova {
+class compute_ocata::nova inherits compute_ocata::params {
 #($compute_ocata::params::cloud_role) inherits compute_ocata::params {
 
-
+#include compute_ocata::params
 include compute_ocata::install
-#include compute_ocata::service
-# $cloud_role= $cloud_role::cloud_role
-#$cloud_role= $compute_ocata::cloud_role
-#$cloud_role= $compute_ocata::params::cloud_role
 
 # $novapackages = [ "openstack-nova-compute",
 #                     "openstack-nova-common" ]
@@ -131,7 +127,7 @@ do_config { 'nova_placement_auth_type': conf_file => '/etc/nova/nova.conf', sect
 
 ########non trovo live_migration_flag cpu_mode e cpu_model
 
-if $cloud_role == "is_prod_sharedstorage" or $cloud_role == "is_prod_localstorage" {
+if $::compute_ocata::cloud_role == "is_prod_sharedstorage" or $::compute_ocata::cloud_role == "is_prod_localstorage" {
 ###   do_config { 'nova_live': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'live_migration_flag', value => $compute_ocata::params::live_migration_flag, }
   do_config { 'nova_libvirt_cpu_mode': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_mode', value => $compute_ocata::params::libvirt_cpu_mode, }
   do_config { 'nova_libvirt_cpu_model': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_model', value => $compute_ocata::params::libvirt_cpu_model, }

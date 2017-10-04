@@ -1,5 +1,7 @@
 class compute_ocata::libvirt {
 
+include compute_ocata::params
+
    $libvirtpackages = [ "libvirt" ]
   
      package { $libvirtpackages: ensure => "installed" }

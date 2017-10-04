@@ -1,5 +1,5 @@
-class compute_ocata::install {
-#inherits compute_ocata::params {
+class compute_ocata::install inherits compute_ocata::params {
+#include compute_ocata::params
 
 #$cloud_role = $cloud_role::cloud_role
 $cloud_role = $compute_ocata::params::cloud_role          
@@ -17,19 +17,17 @@ $cloud_role = $compute_ocata::params::cloud_role
 ### Repository settings (remove old rpm and install new one)
 #
   
-  $oldrelease = 'centos-release-openstack-mitaka'
+  $oldrelease = [ 'centos-release-openstack-mitaka',
+                  'centos-release-ceph-hammer',
+                ]
   $newrelease = 'centos-release-openstack-ocata'
-
-  package { $oldrelease :
-    ensure => 'absent',
-    before => Package[$newrelease],
-  } 
 
   package { $oldrelease :
     ensure => 'purged',
     before => Package[$newrelease],
   }
- 
+   
+
   package { $newrelease :
     ensure => 'installed',
   } 
@@ -71,7 +69,7 @@ $cloud_role = $compute_ocata::params::cloud_role
                                 match  => 'Defaults:neutron',
                     }
  
-if $cloud_role == "is_prod_localstorage" or $cloud_role ==  "is_prod_sharedstorage" {                             
+if $::compute_ocata::cloud_role == "is_prod_localstorage" or $::compute_ocata::cloud_role ==  "is_prod_sharedstorage" {                             
   yumrepo { "glusterfs-epel":
           baseurl=> "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/$::architecture/",
           descr=> "GlusterFS is a clustered file-system capable of scaling to several petabytes",

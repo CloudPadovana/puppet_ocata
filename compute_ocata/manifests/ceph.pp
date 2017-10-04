@@ -1,11 +1,4 @@
-class compute_ocata::ceph {
-
-#inherits compute_ocata::params {
-# include compute_ocata::params
-#  $cloud_role= $cloud_role::cloud_role  
-#$cloud_role= $compute_ocata::cloud_role
-#$cloud_role= $compute_ocata::params::cloud_role 
-$cloud_role= $compute_ocata::params::cloud_role
+class compute_ocata::ceph inherits compute_ocata::params {
 
      yumrepo { "ceph":
                  baseurl             => "http://download.ceph.com/rpm-jewel/el7/$::architecture/",
@@ -33,30 +26,13 @@ $cloud_role= $compute_ocata::params::cloud_role
               backup      => true,
            }
 
-     if $cloud_role == "is_prod_localstorage" or $cloud_role == "is_prod_sharedstorage" {
       file {'secret.xml':
-              source      => 'puppet:///modules/compute_ocata/secret_prod.xml',
-              path        => '/etc/nova/secret.xml',
-              backup      => true,
+             path        => '/etc/nova/secret.xml',
+             backup      => true,
+             content  => template('compute_ocata/secret.erb'),  
            }
-         }
 
-
-       notify { 'role':
-                message  => " cloud_role is ${cloud_role} ",
-              }
-
-
-     if $cloud_role == "is_test" {
-      file {'secret.xml':
-              source      => 'puppet:///modules/compute_ocata/secret_test.xml',
-              path        => '/etc/nova/secret.xml',
-              backup      => true,
-           }
-        }
-    
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
-       
        
       exec { 'get-or-set virsh secret':
               command => $cm,

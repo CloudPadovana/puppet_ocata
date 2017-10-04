@@ -1,8 +1,7 @@
-class compute_ocata::ceilometer {
-  #inherits compute_ocata::params {
+class compute_ocata::ceilometer inherits compute_ocata::params {
 
-  #include compute_ocata::params
-  include compute_ocata::install
+#include compute_ocata::params
+include compute_ocata::install
 
 #  $ceilometerpackages = [ "openstack-ceilometer-compute",
 #                          "python-wsme" ]

@@ -1,12 +1,12 @@
 class compute_ocata::pwl_access {
 
+include compute_ocata::params
+
   $home_dir = "/var/lib/nova"
   $config = "Host *
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
-"
-
-
+  "
 
   user {'nova':
         ensure	=> present,
