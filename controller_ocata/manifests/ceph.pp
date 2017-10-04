@@ -1,35 +1,34 @@
 class controller_ocata::ceph {
 
-  
-      yumrepo { "ceph":
-                 baseurl             => "http://download.ceph.com/rpm-jewel/el7/$::architecture/",
-                 descr               => "Ceph packages for $::architecture",
-                 enabled             => 1,
-                 gpgcheck            => 1,
-                 gpgkey              => 'https://download.ceph.com/keys/release.asc',
-              }
-      yumrepo { "ceph-noarch":
-                 baseurl             => "http://download.ceph.com/rpm-jewel/el7/noarch",
-                 descr               => "Ceph packages for noarch",
-                 enabled             => 1,
-                 gpgcheck            => 1,
-                 gpgkey              => 'https://download.ceph.com/keys/release.asc',
-              }
+    yumrepo { "ceph":
+               baseurl             => "http://download.ceph.com/rpm-jewel/el7/$::architecture/",
+               descr               => "Ceph packages for $::architecture",
+               enabled             => 1,
+               gpgcheck            => 1,
+               gpgkey              => 'https://download.ceph.com/keys/release.asc',
+            }
+    yumrepo { "ceph-noarch":
+               baseurl             => "http://download.ceph.com/rpm-jewel/el7/noarch",
+               descr               => "Ceph packages for noarch",
+               enabled             => 1,
+               gpgcheck            => 1,
+               gpgkey              => 'https://download.ceph.com/keys/release.asc',
+            }
 
-      package { 'ceph-common':
-                 ensure => 'installed',
-                 require => [ Yumrepo["ceph-noarch"], Yumrepo["ceph"] ]
-              }
+     package { 'ceph-common':
+              ensure => 'installed',
+              require => [ Yumrepo["ceph-noarch"], Yumrepo["ceph"] ]
+             }
 ####ceph.conf, ceph.client.cinder ceph.client.glance keyring file are in /controller_ocata/files dir
                                                             
-      file {'ceph.conf':
-              source      => 'puppet:///modules/controller_ocata/ceph.conf',
-              path        => '/etc/ceph/ceph.conf',
-              backup      => true,
-           }
+     file {'ceph.conf':
+            source      => 'puppet:///modules/controller_ocata/ceph.conf',
+            path        => '/etc/ceph/ceph.conf',
+            backup      => true,
+          }
 
-$cloud_role= $compute_ocata::params::cloud_role
-if $cloud_role == "is_production" {
+  $cloud_role= $compute_ocata::params::cloud_role
+  if $cloud_role == "is_production" {
 
       file {'cinder-prod.keyring':
               source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-prod.keyring',
@@ -49,9 +48,9 @@ if $cloud_role == "is_production" {
               mode    => 0640,
            }
 
-      }                          
+  }                          
       
-if $cloud_role == "is_test" {
+  if $cloud_role == "is_test" {
 
       file {'cinder-cloudtest.keyring':
               source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-cloudtest.keyring',
@@ -71,5 +70,5 @@ if $cloud_role == "is_test" {
               mode    => 0640,
            }
 
-      }                 
-  } 
+  }                 
+} 
