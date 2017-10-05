@@ -54,6 +54,8 @@ class controller_ocata::params ($cloud_role){
    $nova_cinder_endpoint_template = ''
    $nova_db = ''
    $nova_password = ''
+   $nova_disk_allocation_ratio = ''
+   $nova_ram_allocation_ratio = ''
    $private_key = ''
    $project_name = 'services'
    $pub_key = "ssh-rsa "   
@@ -138,6 +140,8 @@ class controller_ocata::params ($cloud_role){
    $nova_cinder_endpoint_template = ''
    $nova_db = ''
    $nova_password = ''
+   $nova_disk_allocation_ratio = ''
+   $nova_ram_allocation_ratio = ''
    $private_key = ''
    $project_name = 'service'
    $pub_key = "ssh-rsa "     

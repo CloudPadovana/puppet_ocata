@@ -66,8 +66,9 @@ include compute_ocata::install
 ######
 ###  do_config { 'nova_linuxnet_int_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'linuxnet_interface_driver', value => $compute_ocata::params::linuxnet_int_driver, }
   do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $compute_ocata::params::cpu_allocation_ratio, }
-do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $compute_ocata::params::ram_allocation_ratio, }  
- do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $compute_ocata::params::allow_resize, }
+  do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $compute_ocata::params::ram_allocation_ratio, }
+  do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $compute_ocata::params::disk_allocation_ratio, }
+  do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $compute_ocata::params::allow_resize, }
 
 
 
