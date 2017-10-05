@@ -21,7 +21,8 @@ class compute_ocata::params ($cloud_role) {
   $auth_url = ''
   $ceilometer_auth_url = ''      
   $ceilometer_password = '' 
-  $disk_allocation_ratio = ''  
+  $disk_allocation_ratio = '' 
+  $endpoint_template = 'http://:xxxxxx:8776/v2/%(project_id)s' 
   $glance_api_servers   = ''   
   $libvirt_rbd_key = ''
   $libvirt_rbd_secret_uuid = ''
@@ -45,6 +46,8 @@ class compute_ocata::params ($cloud_role) {
   $auth_url = 'xxxx:35357'
   $ceilometer_auth_url = 'http://xxxx:5000/v3'       
   $ceilometer_password = ''       
+  $disk_allocation_ratio = '5.0'
+  $endpoint_template = 'http://:xxxxxx:8776/v2/%(project_id)s' 
   $glance_api_servers   = 'http://xxxx:9292'
 ####per ceph
   $libvirt_rbd_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx=='

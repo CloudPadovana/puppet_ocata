@@ -138,6 +138,7 @@ if $::compute_ocata::cloud_role == "is_prod_sharedstorage" or $::compute_ocata::
   do_config { 'nova_libvirt_rbd_secret_uuid': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_secret_uuid', value => $compute_ocata::params::libvirt_rbd_secret_uuid, }
   do_config { 'nova_cinder_ssl_ca_file': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'ssl_ca_file', value => $compute_ocata::params::cafile, }
   do_config { 'nova_cinder_cafile': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'cafile', value => $compute_ocata::params::cafile, }
+  do_config { 'nova_cinder_endpoint_template': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'endpoint_template', value => $compute_ocata::params::endpoint_template, }
 
 #### per https nel compute non dovrebbe servire
 do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_ocata::params::enable_proxy_headers_parsing, }
