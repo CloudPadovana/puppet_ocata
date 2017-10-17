@@ -49,7 +49,7 @@ Change directory in path external of the puppet module path for example in /opt 
 
 Inside foreman web application go to Configure -> Puppet classes
 Push the import button. (Import from <puppetmester host>
-Check the Add tips to haproxy line and click Import.
+Check the Add tips to controller_ocata and compute_ocata line and click Import.
 
 ### Configure the module with your parameters:
 
