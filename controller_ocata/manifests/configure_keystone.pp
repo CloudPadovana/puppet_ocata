@@ -91,6 +91,13 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       value     => 'Shib-Identity-Provider',
     }
     
+    file { "/etc/keystone/policy.json":
+      ensure   => file,
+      owner    => "keystone",
+      group    => "keystone",
+      mode     => '0640',
+      source  => "puppet:///modules/controller_ocata/policy.json",
+    }
 
   }
      
