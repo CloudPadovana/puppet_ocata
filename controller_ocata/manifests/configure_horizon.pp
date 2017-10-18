@@ -24,6 +24,14 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     content  => template("controller_ocata/local_settings.erb"),
   }
 
+  file { '/var/log/horizon/horizon_log':
+    path    => '/var/log/horizon/horizon.log',
+    ensure  => 'present',
+    owner   => 'apache',
+    group   => 'apache',
+    mode     => '0644',
+  }
+
   ############################################################################
   #  OS-Federation
   ############################################################################

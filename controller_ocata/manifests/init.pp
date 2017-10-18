@@ -11,7 +11,7 @@ class controller_ocata {
   ### yum install centos-release-openstack-ocata
 
   # Install CA
-  class {'controller_ocata::installca':}
+  class {'controller_ocata::install_ca_cert':}
 
   # Ceph
   class {'controller_ocata::ceph':}
@@ -73,7 +73,7 @@ class controller_ocata {
 
 
 #            Class['controller_ocata::firewall'] -> Class['controller_ocata::configure_glance']
-             Class['controller_ocata::installca'] -> Class['controller_ocata::configure_keystone']
+             Class['controller_ocata::install_ca_cert'] -> Class['controller_ocata::configure_keystone']
              Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::configure_glance']
              Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
              Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
