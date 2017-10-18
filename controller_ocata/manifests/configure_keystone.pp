@@ -43,7 +43,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
 
 
 # Create file /etc/httpd/conf.d/wsgi-keystone.conf
-#  if $cloud_role == "is_production"  { 
+#  if $::controller_ocata::cloud_role == "is_production"  { 
 #   file {'wsgi-keystone.conf':
 #                  source      => 'puppet:///modules/controller_ocata/wsgi-keystone.conf',
 #                  path        => '/etc/httpd/conf.d/wsgi-keystone.conf',

@@ -1,8 +1,8 @@
-class controller_ocata {
-  include controller_ocata::params
+class controller_ocata ($cloud_role_foreman = "undefined") {
 
+  $cloud_role = $cloud_role_foreman
 
-   $ocatapackages = [ "openstack-utils",
+  $ocatapackages = [ "openstack-utils",
 
                    ]
 
@@ -44,6 +44,7 @@ class controller_ocata {
   class {'controller_ocata::configure_horizon':}
 
   # Configure Shibboleth if AII and Shibboleth are enabled
+  notify { "debug001   $enable_aai_ext and $enable_shib": }
   if ($enable_aai_ext and $enable_shib)  {
     class {'controller_ocata::configure_shibboleth':}
   }

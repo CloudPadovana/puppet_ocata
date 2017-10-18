@@ -110,9 +110,7 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 ###### 
    
-$cloud_role= $compute_ocata::params::cloud_role
-
-       if $cloud_role == "is_production" { do_config { 'ml2_network_vlan_ranges': conf_file => '/etc/neutron/plugins/ml2/ml2_conf.ini', section => 'ovs', param => 'network_vlan_ranges', value => $controller_ocata::params::ml2_network_vlan_ranges, }
+       if $::controller_ocata::cloud_role == "is_production" { do_config { 'ml2_network_vlan_ranges': conf_file => '/etc/neutron/plugins/ml2/ml2_conf.ini', section => 'ovs', param => 'network_vlan_ranges', value => $controller_ocata::params::ml2_network_vlan_ranges, }
                                          }
               
   # openvswitch_agent.ini

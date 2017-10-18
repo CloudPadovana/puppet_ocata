@@ -1,4 +1,4 @@
-class controller_ocata::install_ca_cert {
+class controller_ocata::install_ca_cert inherits controller_ocata::params {
 
   yumrepo { "EGI-trustanchors":
           baseurl=> "http://repository.egi.eu/sw/production/cas/1/current/",

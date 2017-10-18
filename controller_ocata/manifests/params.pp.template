@@ -1,7 +1,7 @@
 class controller_ocata::params ($cloud_role){
 
 
-  if $cloud_role == "is_production" {
+  if $::controller_ocata::cloud_role == "is_production" {
 
    ##########################################
    # Cloud di produzione
@@ -83,7 +83,7 @@ class controller_ocata::params ($cloud_role){
 
    } 
     
-   if $cloud_role == "is_test"    {
+   if $::controller_ocata::cloud_role == "is_test"    {
 
    ##########################################
    # Cloud di test

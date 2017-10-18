@@ -1,4 +1,4 @@
-class controller_ocata::ceph {
+class controller_ocata::ceph inherits controller_ocata::params {
 
     yumrepo { "ceph":
                baseurl             => "http://download.ceph.com/rpm-jewel/el7/$::architecture/",
@@ -27,8 +27,7 @@ class controller_ocata::ceph {
             backup      => true,
           }
 
-  $cloud_role= $compute_ocata::params::cloud_role
-  if $cloud_role == "is_production" {
+  if $::controller_ocata::cloud_role == "is_production" {
 
       file {'cinder-prod.keyring':
               source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-prod.keyring',
@@ -50,7 +49,7 @@ class controller_ocata::ceph {
 
   }                          
       
-  if $cloud_role == "is_test" {
+  if $::controller_ocata::cloud_role == "is_test" {
 
       file {'cinder-cloudtest.keyring':
               source      => 'puppet:///modules/controller_ocata/ceph.client.cinder-cloudtest.keyring',
