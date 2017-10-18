@@ -15,5 +15,29 @@ class controller_ocata::installca {
                      ]
   package { $capackages: ensure => "installed" }
 
+  file { 'horizon_log':
+    path    => '/var/log/horizon/horizon.log',
+    ensure  => 'present',
+    owner   => 'apache',
+    group   => 'apache',
+  }
+
+  file { 'cery_pem':
+    path    => '/etc/grid-security/cert.pem',
+    source  => '/etc/grid-security/hostcert.pem',
+    ensure  => 'present',
+    owner   => 'apache',
+    group   => 'apache',
+  }
+
+  file { 'key_pem':
+    path    => '/etc/grid-security/key.pem',
+    source  => '/etc/grid-security/hostkey.pem',
+    ensure  => 'present',
+    owner   => 'apache',
+    group   => 'apache'
+  }
+
+
 
 }
