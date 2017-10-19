@@ -44,13 +44,12 @@ class controller_ocata ($cloud_role_foreman = "undefined") {
   class {'controller_ocata::configure_horizon':}
 
   # Configure Shibboleth if AII and Shibboleth are enabled
-  notify { "debug001   $enable_aai_ext and $enable_shib": }
-  if ($enable_aai_ext and $enable_shib)  {
+  if ($::controller_ocata::params::enable_aai_ext and $::controller_ocata::params::enable_shib)  {
     class {'controller_ocata::configure_shibboleth':}
   }
 
   # Configure OpenIdc if AII and openidc are enabled
-  if ($enable_aai_ext and $enable_oidc)  {
+  if ($::controller_ocata::params::enable_aai_ext and $::controller_ocata::params::enable_oidc)  {
     class {'controller_ocata::configure_openidc':}
   }
  
@@ -66,30 +65,24 @@ class controller_ocata ($cloud_role_foreman = "undefined") {
   class {'controller_ocata::rsyslog':}
   
   
-   file {'INFN-CA.pem':
-                   source      => 'puppet:///modules/controller_ocata/INFN-CA.pem',
-                   path        => '/etc/grid-security/certificates/INFN-CA.pem',
-         }
 
-
-
-#            Class['controller_ocata::firewall'] -> Class['controller_ocata::configure_glance']
-             Class['controller_ocata::install_ca_cert'] -> Class['controller_ocata::configure_keystone']
-             Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::configure_glance']
-             Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
-             Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
-             Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
-             Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_horizon']
-             Class['controller_ocata::configure_horizon'] -> Class['controller_ocata::configure_heat']
-             Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
-             if ($enable_aai_ext and $enable_shib)  {
-               Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_shibboleth']
-             }
-             if ($enable_aai_ext and $enable_oidc) {
-                Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_openidc']
-             }
-            # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
-             Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
+#      Class['controller_ocata::firewall'] -> Class['controller_ocata::configure_glance']
+       Class['controller_ocata::install_ca_cert'] -> Class['controller_ocata::configure_keystone']
+       Class['controller_ocata::configure_keystone'] -> Class['controller_ocata::configure_glance']
+       Class['controller_ocata::configure_glance'] -> Class['controller_ocata::configure_nova']
+       Class['controller_ocata::configure_nova'] -> Class['controller_ocata::configure_neutron']
+       Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_cinder']
+       Class['controller_ocata::configure_cinder'] -> Class['controller_ocata::configure_horizon']
+       Class['controller_ocata::configure_horizon'] -> Class['controller_ocata::configure_heat']
+       Class['controller_ocata::configure_heat'] -> Class['controller_ocata::configure_ceilometer']
+       if ($enable_aai_ext and $enable_shib)  {
+          Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_shibboleth']
+       }
+       if ($enable_aai_ext and $enable_oidc) {
+          Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::configure_openidc']
+       }
+       # Class['controller_ocata::configure_neutron'] -> Class['controller_ocata::configure_ceilometer']
+       Class['controller_ocata::configure_ceilometer'] -> Class['controller_ocata::service']
             
 
   }

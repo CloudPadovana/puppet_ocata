@@ -15,6 +15,11 @@ class controller_ocata::install_ca_cert inherits controller_ocata::params {
                      ]
   package { $capackages: ensure => "installed" }
 
+  file {'INFN-CA.pem':
+    source  => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+    path    => '/etc/grid-security/certificates/INFN-CA.pem',
+  }
+
   file { 'cery_pem':
     path    => '/etc/grid-security/cert.pem',
     source  => '/etc/grid-security/hostcert.pem',
