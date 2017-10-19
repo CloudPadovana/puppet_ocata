@@ -1,4 +1,4 @@
-class controller_ocata::install_ca_cert {
+class controller_ocata::install_ca_cert inherits controller_ocata::params {
 
   yumrepo { "EGI-trustanchors":
           baseurl=> "http://repository.egi.eu/sw/production/cas/1/current/",
@@ -14,6 +14,11 @@ class controller_ocata::install_ca_cert {
                          "fetch-crl"
                      ]
   package { $capackages: ensure => "installed" }
+
+  file {'INFN-CA.pem':
+    source  => 'puppet:///modules/controller_ocata/INFN-CA.pem',
+    path    => '/etc/grid-security/certificates/INFN-CA.pem',
+  }
 
   file { 'cery_pem':
     path    => '/etc/grid-security/cert.pem',

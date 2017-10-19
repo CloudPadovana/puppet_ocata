@@ -1,4 +1,4 @@
-class controller_ocata::rsyslog {
+class controller_ocata::rsyslog inherits controller_ocata::params {
 
 #
 # Questa classe configura rsyslog in modo da centralizzare i log su cld-foreman

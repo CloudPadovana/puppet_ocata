@@ -1,4 +1,4 @@
-class controller_ocata::pwl_access {
+class controller_ocata::pwl_access inherits controller_ocata::params {
 
 #
 # Questa classe configura ssh per l'account nova in modo da permettere accesso password-less
