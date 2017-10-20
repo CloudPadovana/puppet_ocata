@@ -67,8 +67,14 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
         unless => "/usr/bin/mysql -u root -h ${aai_db_host} -e \"show DATABASES LIKE '${aai_db_name}';\"",
     }
 
+    exec { "makemigrations_db":
+        command => "/usr/bin/python /usr/share/openstack-dashboard/manage.py makemigrations --name madebypuppet openstack_auth_shib",
+        creates => "/usr/lib/python2.7/site-packages/openstack_auth_shib/migrations/",
+    }
+
     exec { "migrate_db":
         command => "/usr/sbin/runuser -s /bin/bash -c 'python /usr/share/openstack-dashboard/manage.py migrate' -- apache",
+        onlyif => "/usr/bin/test ! -e /usr/lib/python2.7/site-packages/openstack_auth_shib/migrations/*_madebypuppet.py",
     }
 
   ### Patch for AAI testing IdP
