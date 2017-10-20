@@ -76,12 +76,12 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       param     => 'methods',
       value     => 'password,token,mapped,openid',
     }
-    
+
     do_config { "keystone_federation_sso":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
-      value     => 'https://${site_fqdn}/dashboard/auth/websso/',
+      value     => "https://${site_fqdn}/dashboard/auth/websso/",
     }
 
     do_config { "keystone_shib_attr":
