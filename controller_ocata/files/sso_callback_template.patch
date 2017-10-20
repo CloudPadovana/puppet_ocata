@@ -1,0 +1,17 @@
+--- sso_callback_template.html	2017-07-26 06:47:14.000000000 +0200
++++ sso_callback_template.html.new	2017-10-19 16:09:41.417628832 +0200
+@@ -8,6 +8,7 @@
+        Please wait...
+        <br/>
+        <input type="hidden" name="token" id="token" value="$token"/>
++       <input type="hidden" name="code" id="code" value="$code"/>
+        <noscript>
+          <input type="submit" name="submit_no_javascript" id="submit_no_javascript"
+             value="If your JavaScript is disabled, please click to continue"/>
+@@ -19,4 +20,4 @@
+        }
+      </script>
+   </body>
+-</html>
+\ No newline at end of file
++</html>

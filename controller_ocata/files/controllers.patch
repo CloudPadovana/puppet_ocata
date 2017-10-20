@@ -1,0 +1,43 @@
+--- controllers.py	2017-07-26 13:38:00.000000000 +0200
++++ controllers.py.new	2017-10-19 16:05:43.379845583 +0200
+@@ -327,11 +327,15 @@
+         # NOTE(stevemar): the returned object is a simple dict that
+         # contains the idp_id and remote_id.
+         identity_provider = ref['idp_id']
+-        res = self.federated_authentication(request,
+-                                            identity_provider,
+-                                            protocol_id)
+-        token_id = res.headers['X-Subject-Token']
+-        return self.render_html_response(host, token_id)
++        try:
++            res = self.federated_authentication(request,
++                                                identity_provider,
++                                                protocol_id)
++            token_id = res.headers['X-Subject-Token']
++            return self.render_html_response(host, token_id)
++        except exception.Unauthorized:
++            LOG.error("Caught unauthorized during SSO")
++            return self.render_html_response(host, "", '401')
+ 
+     def federated_idp_specific_sso_auth(self, request, idp_id, protocol_id):
+         host = self._get_sso_origin_host(request)
+@@ -344,16 +348,16 @@
+         token_id = res.headers['X-Subject-Token']
+         return self.render_html_response(host, token_id)
+ 
+-    def render_html_response(self, host, token_id):
++    def render_html_response(self, host, token_id, ret_code='200'):
+         """Form an HTML Form from a template with autosubmit."""
+         headers = [('Content-Type', 'text/html')]
+ 
+         with open(CONF.federation.sso_callback_template) as template:
+             src = string.Template(template.read())
+ 
+-        subs = {'host': host, 'token': token_id}
++        subs = {'host': host, 'token': token_id, 'code': ret_code}
+         body = src.substitute(subs)
+-        return webob.Response(body=body, status='200',
++        return webob.Response(body=body, status=ret_code,
+                               headerlist=headers)
+ 
+     def _create_base_saml_assertion(self, context, auth):
