@@ -48,9 +48,9 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
 
   file { "/etc/shibboleth/shibboleth2.xml":
     ensure   => file,
-    owner    => "shibd",
-    group    => "shibd",
-    mode     => '0640',
+    owner    => "root",
+    group    => "root",
+    mode     => '0644',
     content  => template("controller_ocata/shibboleth2.xml.erb"),
     tag      => ["shibboleth_conf"],
   }
