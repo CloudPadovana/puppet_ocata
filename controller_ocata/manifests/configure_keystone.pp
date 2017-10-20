@@ -114,7 +114,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
     
     exec { "patch-controllers":
       command => "/usr/bin/patch /usr/lib/python2.7/site-packages/keystone/federation/controllers.py /usr/share/keystone/controllers.patch",
-      unless  => "/bin/grep 401 /usr/lib/python2.7/site-packages/keystone/federation/controllers.py 2>/dev/null >/dev/null",
+      unless  => "/bin/grep Keystone-patch-0001 /usr/lib/python2.7/site-packages/keystone/federation/controllers.py 2>/dev/null >/dev/null",
       require => [ File["/usr/share/keystone/controllers.patch"], Package["patch"] ],
     }
     
