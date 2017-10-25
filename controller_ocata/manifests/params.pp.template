@@ -108,7 +108,9 @@ class controller_ocata::params ($cloud_role){
    $cinder_ceph_rbd_pool = ''
    $cinder_ceph_rbd_secret_uuid = ''
    $cinder_ceph_rbd_user = ''
-
+######
+   $dhcp-option-force = ''
+   $dnsmasq_config_file = '/etc/neutron/dnsmasq-neutron.conf'
 #########
    $ec2_password = ''
    $ec2_db = ''
@@ -220,6 +222,7 @@ class controller_ocata::params ($cloud_role){
    $ec2_my_ip = $vip_mgmt
    $ec2_nova_metadata_ip = $vip_mgmt
    $ec2_verbose = false
+   $enable_fip_topology_check = 'False'
    $flavor = 'keystone'
    ##
    ##  $glance_container_formats = 'ami,ari,aki,bare,ovf,ova,docker'
@@ -229,6 +232,7 @@ class controller_ocata::params ($cloud_role){
    $glance_api_rbd_store_chunk_size = '8'
    $glance_api_show_image_direct_url = true
    $glance_api_show_multiple_locations = true
+   $glance_enable_v1_api = 'False'
    $glance_store = 'file,http,rbd'
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'

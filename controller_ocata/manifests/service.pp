@@ -13,6 +13,9 @@ class controller_ocata::service inherits controller_ocata::params {
   # Configure nova
 #  class {'controller_ocata::configure_nova':}
 
+  # Configure horizon
+#  class {'controller_ocata::configure_horizon':}
+
   # Configure ec2
 #  class {'controller_ocata::configure_ec2':}
 
@@ -48,6 +51,7 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
+                   subscribe   => Class['controller_ocata::configure_horizon'],
            }
 
  service { "fetch-crl-cron":
@@ -64,7 +68,7 @@ class controller_ocata::service inherits controller_ocata::params {
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
-                   subscribe   => Class['controller_ocata::configure_keystone'],
+                   subscribe   => [ Class['controller_ocata::configure_keystone'], Class['controller_ocata::configure_horizon'], ],
            }
 
  # Services for Glance

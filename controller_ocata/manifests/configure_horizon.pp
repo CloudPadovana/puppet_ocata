@@ -75,6 +75,7 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     exec { "migrate_db":
         command => "/usr/sbin/runuser -s /bin/bash -c 'python /usr/share/openstack-dashboard/manage.py migrate' -- apache",
         onlyif => "/usr/bin/test ! -e /usr/lib/python2.7/site-packages/openstack_auth_shib/migrations/*_madebypuppet.py",
+        #onlyif => "/usr/bin/test ! -e /usr/lib/python2.7/site-packages/openstack_auth_shib/migrations/*_initialstep.py",
     }
 
   ### Patch for AAI testing IdP

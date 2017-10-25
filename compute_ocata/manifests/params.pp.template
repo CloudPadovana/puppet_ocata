@@ -32,6 +32,9 @@ class compute_ocata::params ($cloud_role) {
   $neutron_url          = ''        
   $novncproxy_base_url = 'https://xxxxxx:6080/vnc_auto.html'
   $nova_password  = ''
+  $placement_auth_url = 'http://xxxxxx:35357/v3'
+  $placement_username = 'placement'
+  $placement_password = ''
   $private_key          = 'id_rsa_ctrl-01'     
   $project_name         = 'services'
   $pub_key              = "ssh-rsa "
@@ -140,7 +143,5 @@ class compute_ocata::params ($cloud_role) {
   $vnc_enabled = true
   $project_domain_id = 'default'
   $user_domain_id = 'default'
-  
-
 }  
 

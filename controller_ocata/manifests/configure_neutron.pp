@@ -110,8 +110,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 ###### 
    
-       if $::controller_ocata::cloud_role == "is_production" { do_config { 'ml2_network_vlan_ranges': conf_file => '/etc/neutron/plugins/ml2/ml2_conf.ini', section => 'ovs', param => 'network_vlan_ranges', value => $controller_ocata::params::ml2_network_vlan_ranges, }
-                                         }
+   if $::controller_ocata::cloud_role == "is_production" { 
+     do_config { 'ml2_network_vlan_ranges': conf_file => '/etc/neutron/plugins/ml2/ml2_conf.ini', section => 'ovs', param => 'network_vlan_ranges', value => $controller_ocata::params::ml2_network_vlan_ranges, }
+   }
               
   # openvswitch_agent.ini
 
@@ -132,9 +133,24 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 # dhcp_agent.ini
 
-   do_config { 'dhcp_interface_driver': conf_file => '/etc/neutron/dhcp_agent.ini', section => 'DEFAULT', param => 'interface_driver', value => $controller_ocata::params::interface_driver, }
-   do_config { 'dhcp_driver': conf_file => '/etc/neutron/dhcp_agent.ini', section => 'DEFAULT', param => 'dhcp_driver', value => $controller_ocata::params::dhcp_driver, }
+  do_config { 'dhcp_interface_driver': conf_file => '/etc/neutron/dhcp_agent.ini', section => 'DEFAULT', param => 'interface_driver', value => $controller_ocata::params::interface_driver, }
+  do_config { 'dhcp_driver': conf_file => '/etc/neutron/dhcp_agent.ini', section => 'DEFAULT', param => 'dhcp_driver', value => $controller_ocata::params::dhcp_driver, }
 
+  if $::controller_ocata::cloud_role == "is_test" {
+      file { "$controller_ocata::params::dnsmasq_config_file":
+        ensure   => file,
+        owner    => "root",
+        group    => "neutron",
+        mode     => '0644',
+        content  => template("controller_ocata/dnsmasq-neutron.conf.erb"),
+    }
+    do_config { 'dnsmasq_config_file': 
+      conf_file => '/etc/neutron/dhcp_agent.ini', 
+      section => 'DEFAULT', 
+      param => 'dnsmasq_config_file', 
+      value => $controller_ocata::params::dnsmasq_config_file,
+    }
+  }
 
 # metadata_agent.ini
 ####
@@ -143,21 +159,21 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'metadata_metadata_proxy_shared_secret': conf_file => '/etc/neutron/metadata_agent.ini', section => 'DEFAULT', param => 'metadata_proxy_shared_secret', value => $controller_ocata::params::metadata_proxy_shared_secret, }
 #######Proxy headers parsing
 do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/neutron.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }
-
+  
 ################
 
- file {'/etc/neutron/plugin.ini':
+  file {'/etc/neutron/plugin.ini':
               ensure      => link,
               target      => '/etc/neutron/plugins/ml2/ml2_conf.ini',
-          }
+  }
 
 
 
   # Disable useless OVS loggin in secure file
-file_line { '/etc/sudoers.d/neutron  syslog':
+  file_line { '/etc/sudoers.d/neutron  syslog':
            path   => '/etc/sudoers.d/neutron',
            line   => 'Defaults:neutron !requiretty, !syslog',
            match  => 'Defaults:neutron',
-          }
+  }
 
 }
