@@ -3,13 +3,8 @@ class controller_ocata::configure_nova inherits controller_ocata::params {
 #
 # Questa classe:
 # - popola il file /etc/nova/nova.conf
-# - modifica il file /etc/nova/policy.json in modo che solo l'owner di una VM possa farne lo stop e delete
+# - crea il file /etc/nova/policy.json in modo che solo l'owner di una VM possa farne lo stop e delete
 # 
-################
-### yum -y install openstack-nova-placement-api
-# $novapackages = [ "openstack-nova-palacement-api", ]
-#  package { $novapackages: ensure => "installed" }
-
 ###################  
 define do_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
@@ -29,32 +24,23 @@ define remove_config ($conf_file, $section, $param, $value) {
                                                                                                                                              
 
 # nova.conf
-###rpc_backend rabbit_hosts e rabbit_ha_queue non ci sono piu' in ocata, 
-#   do_config { 'nova_rpc_backend': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'rpc_backend', value => $controller_ocata::params::rpc_backend, }
-#####
-   do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, }
-######## 
-####forse questo va in sezione api e non default 
    do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_ocata::params::auth_strategy, }
-####   
+
+   do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_ocata::params::transport_url, }
    do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_ocata::params::vip_mgmt, }
    do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_ocata::params::nova_firewall_driver, }
    do_config { 'nova_use_neutron': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'use_neutron', value => $controller_ocata::params::use_neutron, }
    do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $controller_ocata::params::nova_cpu_allocation_ratio, }
    do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $controller_ocata::params::nova_disk_allocation_ratio, }
    do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $controller_ocata::params::nova_ram_allocation_ratio, }
-#####ok verificati
    do_config { 'nova_enabled_filters': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'enabled_filters', value => $controller_ocata::params::enabled_filters, }
    do_config { 'nova_default_schedule_zone': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'default_schedule_zone', value => $controller_ocata::params::nova_default_schedule_zone, }
    do_config { 'nova_scheduler_max_attempts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'max_attempts', value => $controller_ocata::params::nova_scheduler_max_attempts, }
    do_config { 'nova_host_subset_size': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'host_subset_size', value => $controller_ocata::params::nova_host_subset_size, }
    do_config { 'nova_host_discover_hosts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'discover_hosts_in_cells_interval', value => $controller_ocata::params::nova_discover_hosts_in_cells_interval, }
-#######    
    do_config { 'nova_vncserver_listen': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'vncserver_listen', value => $controller_ocata::params::vip_pub, }
    do_config { 'nova_vncserver_proxyclient_address': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'vncserver_proxyclient_address', value => $controller_ocata::params::vip_mgmt, }
-#####vnc enable
    do_config { 'nova_vnc_enabled': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'enabled', value => $controller_ocata::params::vnc_enabled, }
-####
    do_config { 'nova_api_db': conf_file => '/etc/nova/nova.conf', section => 'api_database', param => 'connection', value => $controller_ocata::params::nova_api_db, }
 
    do_config { 'nova_db': conf_file => '/etc/nova/nova.conf', section => 'database', param => 'connection', value => $controller_ocata::params::nova_db, }
