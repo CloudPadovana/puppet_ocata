@@ -20,7 +20,7 @@ class controller_ocata::install_ca_cert inherits controller_ocata::params {
     path    => '/etc/grid-security/certificates/INFN-CA.pem',
   }
 
-  file { 'cery_pem':
+  file { 'cert_pem':
     path    => '/etc/grid-security/cert.pem',
     source  => '/etc/grid-security/hostcert.pem',
     ensure  => 'present',
