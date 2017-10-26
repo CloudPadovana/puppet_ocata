@@ -26,10 +26,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 # keystone.conf
    do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_ocata::params::admin_token, }
 
-#####verificare se effettivamente vanno configurati public_endpoint e admin_endpoint   
   do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_ocata::params::keystone_public_endpoint, }
    do_config { 'keystone_admin_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_endpoint', value => $controller_ocata::params::keystone_admin_endpoint, }
-#########  
+
    do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_ocata::params::keystone_db, }
 
   do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_ocata::params::keystone_token_provider, }
@@ -42,13 +41,6 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
 ##  do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_ocata::params::keystone_auth_methods, }
 
 
-# Create file /etc/httpd/conf.d/wsgi-keystone.conf
-#  if $::controller_ocata::cloud_role == "is_production"  { 
-#   file {'wsgi-keystone.conf':
-#                  source      => 'puppet:///modules/controller_ocata/wsgi-keystone.conf',
-#                  path        => '/etc/httpd/conf.d/wsgi-keystone.conf',
-#     }
-#  }
 
    file { "/usr/share/keystone/wsgi-keystone.conf":
      ensure   => file,
