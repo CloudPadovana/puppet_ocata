@@ -40,7 +40,7 @@ class controller_ocata ($cloud_role_foreman = "undefined") {
   # Configure ceilometer
   class {'controller_ocata::configure_ceilometer':}
 
-  # Configure ceilometer
+  # Configure horizon
   class {'controller_ocata::configure_horizon':}
 
   # Configure Shibboleth if AII and Shibboleth are enabled
