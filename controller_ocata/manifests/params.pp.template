@@ -90,7 +90,6 @@ class controller_ocata::params ($cloud_role){
    $site_fqdn = "cloud-areapd-test.pd.infn.it"
    $for_production = false
    $admin_password = ''
-   $admin_tenant_name = ''
    $admin_token = ''
    $auth_uri = ''
    $auth_url = ''
