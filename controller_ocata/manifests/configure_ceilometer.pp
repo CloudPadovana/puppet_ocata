@@ -50,7 +50,7 @@ do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer
 # See https://issues.infn.it/jira/browse/PDCL-749
    do_config { 'ceilometer_default_log_levels': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'default_log_levels', value => $controller_ocata::params::ceilometer_default_log_levels, }
 
-   #do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }
+   do_config { 'ceilometer_auth_uri': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_ocata::params::auth_uri, }
    do_config { 'ceilometer_auth_url': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_ocata::params::auth_url, }
    do_config { 'ceilometer_memcached_servers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_ocata::params::memcached_servers, }
    do_config { 'ceilometer_project_name': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'keystone_authtoken', param => 'project_name', value => $controller_ocata::params::project_name, }
