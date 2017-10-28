@@ -64,7 +64,6 @@ class compute_ocata::service inherits compute_ocata::params {
                             
 
     if $::compute_ocata::cloud_role == "is_prod_localstorage" {
-                  # mount glusterfs volume
 
                   file { 'nova-instances':
                             path        => "/var/lib/nova/instances",
@@ -79,7 +78,8 @@ class compute_ocata::service inherits compute_ocata::params {
                             ensure      => directory,
                             require     => Package["openstack-nova-common"],
                        }
-
+                       
+                  # mount glusterfs volume
                   mount { "/var/lib/nova/instances":
                             ensure      => mounted,
                             device      => "$compute_ocata::params::volume_glusterfs_ip:/$compute_ocata::params::volume_glusterfs",
