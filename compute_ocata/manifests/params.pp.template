@@ -101,13 +101,14 @@ class compute_ocata::params ($cloud_role) {
   $enable_security_group   = true
   $enable_tunneling        = true       
   #Per distinguere local o shared storage per i compute posso aggiungere una variabile se localstorage if $cloud_strg == "is_local" o "is_shared"    
-  if $cloud_role == "is_prod_localstorage" or $cloud_role == "is_test" {
+  # Non piu` necessario perche` usiamo host-passthrough dappertutto
+#  if $cloud_role == "is_prod_localstorage" or $cloud_role == "is_test" {
   $libvirt_cpu_mode        = 'host-passthrough'
-                                }
-  if $cloud_role == "is_prod_sharedstorage" {
-  $libvirt_cpu_mode        = 'custom'
-  $libvirt_cpu_model       = 'kvm64'
-                                }  
+#                                }
+#  if $cloud_role == "is_prod_sharedstorage" {
+#  $libvirt_cpu_mode        = 'custom'
+#  $libvirt_cpu_model       = 'kvm64'
+#                                }  
   $libvirt_inject_key      = true
   $libvirt_inject_part     = '-1'     
   $libvirt_inject_pass     = true       

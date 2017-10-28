@@ -128,11 +128,12 @@ do_config { 'nova_placement_auth_type': conf_file => '/etc/nova/nova.conf', sect
 
 ########non trovo live_migration_flag cpu_mode e cpu_model
 
-if $::compute_ocata::cloud_role == "is_prod_sharedstorage" or $::compute_ocata::cloud_role == "is_prod_localstorage" {
+# Usiamo host-passthrough dappertutto. Quindi non serve piu` gestire la differenza        
+#if $::compute_ocata::cloud_role == "is_prod_sharedstorage" or $::compute_ocata::cloud_role == "is_prod_localstorage" {
 ###   do_config { 'nova_live': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'live_migration_flag', value => $compute_ocata::params::live_migration_flag, }
   do_config { 'nova_libvirt_cpu_mode': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_mode', value => $compute_ocata::params::libvirt_cpu_mode, }
-  do_config { 'nova_libvirt_cpu_model': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_model', value => $compute_ocata::params::libvirt_cpu_model, }
-}
+#  do_config { 'nova_libvirt_cpu_model': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_model', value => $compute_ocata::params::libvirt_cpu_model, }
+#}
 ####config di libvirt per utilizzare ceph
   do_config { 'nova_libvirt_rbd_user': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_user', value => $compute_ocata::params::libvirt_rbd_user, }
   do_config { 'nova_libvirt_rbd_secret_uuid': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_secret_uuid', value => $compute_ocata::params::libvirt_rbd_secret_uuid, }
