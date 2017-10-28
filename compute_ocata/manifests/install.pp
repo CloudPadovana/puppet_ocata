@@ -52,7 +52,7 @@ $cloud_role = $compute_ocata::params::cloud_role
   package { $novapackages: ensure => "installed" }
   
   $ceilometerpackages = [ "openstack-ceilometer-compute",
-                          "python-wsme" ]
+                          "python2-wsme" ]
                            # ,
                            #"python-ceilometerclient",
                            #"python2-pecan" ]
