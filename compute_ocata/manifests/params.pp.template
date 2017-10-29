@@ -70,7 +70,6 @@ class compute_ocata::params ($cloud_role) {
 ###transport url in ocata al posto di rabbit hosts
   $transport_url = 'rabbit://openstack:'   
 ###aggiunto anche
-  $nova_enabled_apis = 'osapi_compute,metadata'
       
                               }
 
@@ -119,6 +118,7 @@ class compute_ocata::params ($cloud_role) {
   $neutron_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'       
   $neutron_lock_path               = '/var/lib/neutron/tmp'       
   $neutron_username      = 'neutron'       
+  $nova_enabled_apis = 'osapi_compute,metadata'
   $nova_firewall_driver    = 'nova.virt.firewall.NoopFirewallDriver'
   $nova_instance_usage_audit = true
   $nova_instance_usage_audit_period = 'hour'
