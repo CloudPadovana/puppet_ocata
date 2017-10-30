@@ -223,7 +223,6 @@ CustomLog logs/ssl_request_log \
         ShibRequestSetting requireSession 1
         require shib-session
         ShibRequestSetting applicationId default
-        ShibRequestSetting target https://<%=@site_fqdn%>/dashboard-infn/auth/login/
         ShibRequestSetting entityID <%=@infnaai_ent_id%>
     </Location>
 <% end -%>
