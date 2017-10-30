@@ -17,16 +17,22 @@ $cloud_role = $compute_ocata::params::cloud_role
 ### Repository settings (remove old rpm and install new one)
 #
   
+  define removepackage {
+    exec {
+        "removepackage_$name":
+            command => "/usr/bin/yum -y erase $name",
+            onlyif => "/bin/rpm -ql $name";
+    }
+  }
+
   $oldrelease = [ 'centos-release-openstack-mitaka',
                   'centos-release-ceph-hammer',
                 ]
   $newrelease = 'centos-release-openstack-ocata'
 
-  package { $oldrelease :
-    ensure => 'purged',
-    before => Package[$newrelease],
+  Removepackage { 
+    $oldrelease :
   }
-   
 
   package { $newrelease :
     ensure => 'installed',
