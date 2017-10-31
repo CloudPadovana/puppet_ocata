@@ -21,7 +21,7 @@ $cloud_role = $compute_ocata::params::cloud_role
     exec {
         "removepackage_$name":
             command => "/usr/bin/yum -y erase $name",
-            onlyif => "/bin/rpm -ql $name";
+            onlyif => "/bin/rpm -ql $name",
     }
   }
 
@@ -30,8 +30,8 @@ $cloud_role = $compute_ocata::params::cloud_role
                 ]
   $newrelease = 'centos-release-openstack-ocata'
 
-  Removepackage { 
-    $oldrelease :
+  removepackage{
+     $oldrelease :
   }
 
   package { $newrelease :
