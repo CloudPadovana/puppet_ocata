@@ -222,6 +222,7 @@ class controller_ocata::params ($cloud_role){
    $enable_fip_topology_check = 'False'
    $flavor = 'keystone'
    ##
+   $glance_api_version = '2'
    ##  $glance_container_formats = 'ami,ari,aki,bare,ovf,ova,docker'
    $glance_image_size_cap = '26843545600'
    $glance_notification_driver = 'messagingv2'

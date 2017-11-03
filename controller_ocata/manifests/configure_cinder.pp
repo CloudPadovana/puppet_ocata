@@ -32,6 +32,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_glance_api_servers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_servers', value => $controller_ocata::params::glance_api_servers, }
    do_config { 'cinder_enabled_backends': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_ocata::params::cinder_enabled_backends, }
    do_config { 'cinder_default_volume_type': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'default_volume_type', value => $controller_ocata::params::cinder_default_volume_type, }
+  do_config { 'cinder_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_version', value => $controller_ocata::params::glance_api_version, }
 
   do_config { 'cinder_db': conf_file => '/etc/cinder/cinder.conf', section => 'database', param => 'connection', value => $controller_ocata::params::cinder_db, }
 #######transport_url
