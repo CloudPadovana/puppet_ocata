@@ -199,6 +199,7 @@ class controller_ocata::params ($cloud_role){
    $cinder_glusterfs_shares_config = '/etc/cinder/shares'
    $cinder_iscsi_helper = 'tgtadm'
    ###iscsi params
+   $cinder_iscsi_nfs_nas_secure_file_permissions = false
    $cinder_iscsi_nfs_mount_point_base = '/var/lib/cinder/nfs'
    $cinder_iscsi_shares_config = '/etc/cinder/shares'
    ####

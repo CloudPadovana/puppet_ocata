@@ -32,6 +32,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_glance_api_servers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_servers', value => $controller_ocata::params::glance_api_servers, }
    do_config { 'cinder_enabled_backends': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_ocata::params::cinder_enabled_backends, }
    do_config { 'cinder_default_volume_type': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'default_volume_type', value => $controller_ocata::params::cinder_default_volume_type, }
+  # The following is needed otherwise creation of volumes from images doesn't work     
   do_config { 'cinder_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_version', value => $controller_ocata::params::glance_api_version, }
 
   do_config { 'cinder_db': conf_file => '/etc/cinder/cinder.conf', section => 'database', param => 'connection', value => $controller_ocata::params::cinder_db, }
@@ -59,6 +60,7 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'cinder_iscsi_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_driver', value => $controller_ocata::params::iscsi_volume_driver, }
    do_config { 'cinder_iscsi_shares_config': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_shares_config', value => $controller_ocata::params::cinder_iscsi_shares_config, }
    do_config { 'cinder_iscsi_nfs_mount_point_base': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nfs_mount_point_base', value => $controller_ocata::params::cinder_iscsi_nfs_mount_point_base, }
+   do_config { 'cinder_iscsi_nfs_nas_secure_file_permissions': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'nas_secure_file_permissions', value => $controller_ocata::params::cinder_iscsi_nfs_nas_secure_file_permissions, }
 ############# Ceph configuration
  do_config { 'cinder_ceph_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'volume_group', value => $controller_ocata::params::ceph_volume_group, }
    do_config { 'cinder_ceph_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'volume_backend_name', value => $controller_ocata::params::ceph_volume_backend_name, }
