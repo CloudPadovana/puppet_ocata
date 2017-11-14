@@ -231,7 +231,7 @@ class controller_ocata::params ($cloud_role){
    $glance_api_rbd_store_chunk_size = '8'
    $glance_api_show_image_direct_url = true
    $glance_api_show_multiple_locations = true
-   $glance_enable_v1_api = 'False'
+   $glance_enable_v1_api = 'True'
    $glance_store = 'file,http,rbd'
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'

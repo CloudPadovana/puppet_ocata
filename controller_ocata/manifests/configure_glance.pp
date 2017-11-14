@@ -30,6 +30,8 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 #   do_config { 'glance_api_notification_driver': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'notification_driver', value => $controller_ocata::params::glance_notification_driver, }
 
+#
+# v1 api must be enabled, otherwise euca-describe-images doesn't work       
   do_config { 'glance_enable_v1_api': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enable_v1_api', value => $controller_ocata::params::glance_enable_v1_api, }
 
 # 25 GB max size for an image
