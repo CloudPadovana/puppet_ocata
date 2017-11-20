@@ -344,6 +344,8 @@ class controller_ocata::params ($cloud_role){
     $infnaai_ent_id = "https://idp.infn.it/testing/saml2/idp/metadata.php"
   }
 
+  $unipdaai_ent_id = "https://shibidp.cca.unipd.it/idp/shibboleth"
+
   ############################################################################
   #  OpenID Connect params
   ############################################################################

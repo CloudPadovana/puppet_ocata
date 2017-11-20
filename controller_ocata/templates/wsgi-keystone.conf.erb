@@ -37,6 +37,17 @@ Listen 35357
         ShibRequireSession On
         ShibExportAssertion Off
     </Location>
+
+    # Unipd AAI setup
+    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting requireSession 1
+        ShibRequestSetting applicationId default
+        ShibRequestSetting entityID <%=@unipdaai_ent_id%>
+        ShibRequireSession On
+        ShibExportAssertion Off
+    </Location>
 <% end -%>
 </VirtualHost>
 

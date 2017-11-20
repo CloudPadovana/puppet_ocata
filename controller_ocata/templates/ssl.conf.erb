@@ -225,6 +225,16 @@ CustomLog logs/ssl_request_log \
         ShibRequestSetting applicationId default
         ShibRequestSetting entityID <%=@infnaai_ent_id%>
     </Location>
+
+    WSGIScriptAlias /dashboard-unipd /usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi
+
+    <Location /dashboard-unipd>
+      AuthType shibboleth
+      ShibRequestSetting requireSession 1
+      ShibRequestSetting applicationId default
+      ShibRequestSetting entityID <%=@unipdaai_ent_id%>
+      require shib-session
+    </Location>
 <% end -%>
 
 </VirtualHost>
