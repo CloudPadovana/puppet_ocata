@@ -255,7 +255,6 @@ class controller_ocata::params ($cloud_role){
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
    $iscsi_volume_group = 'iscsi-infnpd'
 #####
-   $keystone_key_repository = '/etc/keystone/fernet-keys/'
    $keystone_verbose = false
    $keystone_token_provider = 'fernet'
    $l3_external_network_bridge = ''

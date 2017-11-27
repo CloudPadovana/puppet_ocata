@@ -34,7 +34,6 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_ocata::params::keystone_token_provider, }
   do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_ocata::params::token_expiration, }
 
-  do_config { 'keystone_key_repository': conf_file => '/etc/keystone/keystone.conf', section => 'fernet_tokens', param => 'key_repository', value => $controller_ocata::params::keystone_key_repository, }
 
 
        
