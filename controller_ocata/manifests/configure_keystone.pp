@@ -32,8 +32,12 @@ define remove_config ($conf_file, $section, $param, $value) {
    do_config { 'keystone_db': conf_file => '/etc/keystone/keystone.conf', section => 'database', param => 'connection', value => $controller_ocata::params::keystone_db, }
 
   do_config { 'keystone_token_provider': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'provider', value => $controller_ocata::params::keystone_token_provider, }
-   do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_ocata::params::token_expiration, }
+  do_config { 'keystone_token_expiration': conf_file => '/etc/keystone/keystone.conf', section => 'token', param => 'expiration', value => $controller_ocata::params::token_expiration, }
 
+  do_config { 'keystone_key_repository': conf_file => '/etc/keystone/keystone.conf', section => 'fernet_tokens', param => 'key_repository', value => $controller_ocata::params::keystone_key_repository, }
+
+
+       
 #######Proxy headers parsing
 do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }
 
@@ -82,6 +86,9 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       param     => 'remote_id_attribute',
       value     => 'Shib-Identity-Provider',
     }
+
+
+
     
     file { "/etc/keystone/policy.json":
       ensure   => file,
