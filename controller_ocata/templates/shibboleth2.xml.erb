@@ -31,7 +31,7 @@
         <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
        
         <MetadataProvider type="Chaining">
-<% if @cloud_role == "is_test" -%>
+<% if @shib_testing_md -%>
             <MetadataProvider type="XML"
                               uri="https://idp.infn.it/testing/saml2/idp/metadata.php"
                               backingFilePath="/var/cache/shibboleth/idp.infn.it-testing-metadata.xml"/>
