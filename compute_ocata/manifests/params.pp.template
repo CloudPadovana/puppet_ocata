@@ -144,5 +144,8 @@ class compute_ocata::params ($cloud_role) {
   $vnc_enabled = true
   $project_domain_id = 'default'
   $user_domain_id = 'default'
+
+  # ceilometer
+  $ceilometer_compute_instance_discovery_method = 'naive'
 }  
 
