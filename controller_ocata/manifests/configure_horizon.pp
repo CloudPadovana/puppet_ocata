@@ -97,5 +97,19 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
     mode     => '0600',
     content  => template("controller_ocata/actions.conf.erb"),
   }
+  
+  if "${::fqdn}" =~ /01/ {
+    $renew_schedule = "15 0 * * *"
+  } else {
+    $renew_schedule = "30 0 * * *"
+  }
+  
+  file { "/etc/cron.d/openstack-auth-shib-cron":
+    ensure   => file,
+    owner    => "root",
+    group    => "root",
+    mode     => '0644',
+    content  => template("controller_ocata/openstack-auth-shib-cron.erb"),
+  }
 
 }
