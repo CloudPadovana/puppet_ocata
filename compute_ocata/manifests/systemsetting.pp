@@ -35,4 +35,8 @@ class compute_ocata::systemsetting inherits compute_ocata::params {
              path        => '/etc/grid-security/certificates/INFN-CA.pem',
         }
 
+   package { "ca_TERENA-SSL-CA-3":
+             source   => "http://igi-01.pd.infn.it/mrepo/CAP/misc/CentOS7/current/ca_TERENA-SSL-CA-3.el7.centos.noarch.rpm",
+             provider => "rpm",
+        }
 }
