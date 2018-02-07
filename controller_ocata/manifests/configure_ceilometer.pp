@@ -10,6 +10,7 @@ class controller_ocata::configure_ceilometer inherits controller_ocata::params {
  $ceilometerpackages = [ "openstack-ceilometer-collector",
                          "openstack-ceilometer-notification",
                          "openstack-ceilometer-central", 
+                         "python2-gnocchiclient",
                          "python2-ceilometerclient" ]
 
  package { $ceilometerpackages: ensure => "installed" }
