@@ -220,6 +220,14 @@ class controller_ocata::params ($cloud_role){
    $ec2_my_ip = $vip_mgmt
    $ec2_nova_metadata_ip = $vip_mgmt
    $ec2_verbose = false
+   $eqlog_eqlx_group_name = 'CloudUnipdVeneto'
+   $eqlog_eqlx_pool = 'default'
+   $eqlog_san_ip = ''
+   $eqlog_san_login = ''
+   $eqlog_san_password = ''
+   $eqlog_volume_driver = 'cinder.volume.drivers.dell_emc.ps.PSSeriesISCSIDriver'
+   $eqlog_volume_group = 'equallogic-unipd'
+   $eqlog_volume_backend_name = 'equallogic-unipd'
    $enable_fip_topology_check = 'False'
    $flavor = 'keystone'
    ##

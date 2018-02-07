@@ -75,7 +75,17 @@ define remove_config ($conf_file, $section, $param, $value) {
   do_config { 'cinder_ceph_glance_api_version': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'glance_api_version', value => $controller_ocata::params::ceph_glance_api_version, }
   do_config { 'cinder_ceph_rbd_user': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_user', value => $controller_ocata::params::cinder_ceph_rbd_user, }
   do_config { 'cinder_ceph_rbd_secret_uuid': conf_file => '/etc/cinder/cinder.conf', section => 'ceph', param => 'rbd_secret_uuid', value => $controller_ocata::params::cinder_ceph_rbd_secret_uuid, }
+##########EqualLogic
+   do_config { 'cinder_eqlog_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'volume_group', value => $controller_ocata::params::eqlog_volume_group, }
+   do_config { 'cinder_eqlog_volume_backend_name': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'volume_backend_name', value => $controller_ocata::params::eqlog_volume_backend_name, }
+   do_config { 'cinder_eqlog_volume_driver': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'volume_driver', value => $controller_ocata::params::eqlog_volume_driver, }
+   do_config { 'cinder_eqlog_san_ip': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'san_ip', value => $controller_ocata::params::eqlog_san_ip, }
+   do_config { 'cinder_eqlog_san_login': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'san_login', value => $controller_ocata::params::eqlog_san_login, }
+   do_config { 'cinder_eqlog_san_password': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'san_password', value => $controller_ocata::params::eqlog_san_password, }
+   do_config { 'cinder_eqlog_eqlx_group_name': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'eqlx_group_name', value => $controller_ocata::params::eqlog_eqlx_group_name, }
+   do_config { 'cinder_eqlog_eqlx_pool': conf_file => '/etc/cinder/cinder.conf', section => 'equallogic-unipd', param => 'eqlx_pool', value => $controller_ocata::params::eqlog_eqlx_pool, }
 
+       
 #######Proxy headers parsing
 do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }       
 ####################       
