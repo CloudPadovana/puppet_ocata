@@ -34,6 +34,46 @@ define remove_config ($conf_file, $section, $param, $value) {
        }
                                                                                                                                              
   
+define do_augeas_config ($conf_file, $section, $param) {
+  $split = split($name, ':')
+  $value = $split[-1]
+  $index = $split[-2]
+
+  augeas { "augeas/${conf_file}/${section}/${param}/${index}/${name}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "set ${section}/${param}[${index}] ${value}" ],
+    onlyif  => "get ${section}/${param}[${index}] != ${value}"
+  }
+}
+
+define do_config_list (
+  $conf_file = '/etc/ceilometer/ceilometer.conf',
+  $section = 'DEFAULT',
+  $param,
+  $values
+) {
+
+  $values_size = size($values)
+
+  # remove the entire block if the size doesn't match
+  augeas { "remove_${conf_file}_${section}_${param}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "rm ${section}/${param}" ],
+    onlyif  => "match ${section}/${param} size > ${values_size}"
+  }
+
+  $namevars = array_to_namevars($values, "${conf_file}:${section}:${param}")
+
+  # check each value
+  do_augeas_config { $namevars:
+    conf_file => $conf_file,
+    section => $section,
+    param => $param
+  }
+}
+
 
                                                                                                                                   
 # ceilometer.conf
