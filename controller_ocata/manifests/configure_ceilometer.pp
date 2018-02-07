@@ -114,8 +114,34 @@ do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer
    do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $controller_ocata::params::cafile,
  }
   
-  do_config { 'ceilometer_meter_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'meter_dispatchers', value => $controller_ocata::params::ceilometer_meter_dispatchers, }
-   do_config { 'ceilometer_event_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'event_dispatchers', value => $controller_ocata::params::ceilometer_event_dispatchers, }
+
+  do_config_list { 'ceilometer_meter_dispatchers':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section   => 'DEFAULT',
+    param     => 'meter_dispatchers',
+    values    => $controller_ocata::params::ceilometer_meter_dispatchers,
+  }
+
+  do_config_list { 'ceilometer_event_dispatchers':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section   => 'DEFAULT',
+    param     => 'event_dispatchers',
+    values    => $controller_ocata::params::ceilometer_event_dispatchers,
+  }
+
+  do_config { 'ceilometer__dispatcher_gnocchi__filter_service_activity':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section => 'dispatcher_gnocchi',
+    param => 'filter_service_activity',
+    value => $controller_ocata::params::ceilometer__dispatcher_gnocchi__filter_service_activity,
+  }
+
+  do_config { 'ceilometer__dispatcher_gnocchi__archive_policy':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section => 'dispatcher_gnocchi',
+    param => 'archive_policy',
+    value => $controller_ocata::params::ceilometer__dispatcher_gnocchi__archive_policy,
+  }
 
 #######Proxy headers parsing
 do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }
