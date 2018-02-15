@@ -47,6 +47,15 @@ class compute_ocata::service inherits compute_ocata::params {
 
                }
 
+       service { "polkit":
+                    ensure      => running,
+                    enable      => true,
+                    hasstatus   => true,
+                    hasrestart  => true,
+                    subscribe   => Class['compute_ocata::nova']
+
+               }
+
         service { "openstack-ceilometer-compute":
                     ensure      => running,
                     enable      => true,

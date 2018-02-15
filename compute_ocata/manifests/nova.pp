@@ -153,4 +153,19 @@ do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.co
   do_config { 'nova_notify_on_state_change': conf_file => '/etc/nova/nova.conf', section => 'notifications', param => 'notify_on_state_change', value => $compute_ocata::params::nova_notify_on_state_change, }
   do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_ocata::params::nova_notification_driver, }
 
+
+#####
+# Config libvirt access role
+#####
+
+  file { '49-org.libvirt.unix.manager.rules':
+           source      => 'puppet:///modules/compute_ocata/49-org.libvirt.unix.manager.rules',
+           path        => '/etc/polkit-1/rules.d/49-org.libvirt.unix.manager.rules',
+           ensure      => present,
+           backup      => true,
+           owner   => root,
+           group   => root,
+           mode    => 0644,
+  }
+
 }
