@@ -14,18 +14,8 @@
 
         <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
                   checkAddress="false" handlerSSL="true" cookieProps="https">
-
             <SSO>SAML2 SAML1</SSO>
-
             <Logout>SAML2 Local</Logout>
-            
-            <Handler type="MetadataGenerator" Location="/Metadata"
-                     template="idem-template-metadata.xml"
-                     signing="true"/>
-                     
-            <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
-            <Handler type="Session" Location="/Session" showAttributeValues="false"/>
-            <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
         </Sessions>
 
         <Errors redirectErrors="https://<%=@site_fqdn-%>/dashboard/auth/auth_error/"/>
@@ -49,20 +39,13 @@
         <AttributeResolver type="Query" subjectMatch="true"/>
         <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 
-        <CredentialResolver type="File">
-            <Key><Path>/etc/shibboleth/sp-key.pem</Path></Key>
-            <Certificate>
-                <Path>/etc/shibboleth/sp-cert.pem</Path>
-                <Path><%=@cafile-%></Path>
-            </Certificate>
-<% if @crl_file_list.length > 0 -%>
-            <CRL>
-<% @crl_file_list.each do | crl_file | -%>
-                <Path><%=crl_file-%></Path>
-<% end -%>
-            </CRL>
-<% end -%>
-        </CredentialResolver>
+        <CredentialResolver type="File" 
+                                key="/etc/shibboleth/sp-key.pem"
+                                certificate="/etc/shibboleth/sp-cert.pem" />
+
+        <ApplicationOverride id="unipd_app" entityID="https://cloudveneto.ict.unipd.it:8444/dashboard-shib">
+            <Errors redirectErrors="https://cloudveneto.ict.unipd.it:8444/dashboard/auth/auth_error/"/>
+        </ApplicationOverride>
 
     </ApplicationDefaults>
     

@@ -325,9 +325,11 @@ class controller_ocata::params ($cloud_role){
   #  Security params
   ############################################################################
 
-  $host_cert = "cert.pem"
-  $host_key = "key.pem"
-  $crl_file_list = [ "/etc/grid-security/certificates/49f18420.r0" ]
+  $host_cert = "/etc/grid-security/infn-cert.pem"
+  $host_key = "/etc/grid-security/infn-key.pem"
+  $unipd_cert = "/etc/grid-security/unipd-cert.pem"
+  $unipd_key = "/etc/grid-security/unipd-key.pem"
+  $crl_file_list = []
 
   ############################################################################
   #  AAI estensions
