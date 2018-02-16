@@ -1,10 +1,6 @@
 Listen 5000
 Listen 35357
 
-WSGIApplicationGroup  %{GLOBAL}
-WSGIDaemonProcess     keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-WSGIProcessGroup      keystone-public
-
 <VirtualHost cloudveneto.ict.unipd.it:5000>
     ServerName       https://cloudveneto.ict.unipd.it:5000
     UseCanonicalName On
@@ -19,6 +15,10 @@ WSGIProcessGroup      keystone-public
 
     WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
     WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-infn-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
+    WSGIProcessGroup      keystone-infn-public
+
 
     <Directory /usr/bin>
         Require all granted
@@ -65,6 +65,10 @@ WSGIProcessGroup      keystone-public
 
     WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
     WSGIPassAuthorization On
+    WSGIApplicationGroup  %{GLOBAL}
+    WSGIDaemonProcess     keystone-unipd-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
+    WSGIProcessGroup      keystone-unipd-public
+
 
     <Directory /usr/bin>
         Require all granted
