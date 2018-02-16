@@ -254,6 +254,7 @@ class controller_ocata::params ($cloud_role){
    $heat_stack_user_domain_name = 'heat'
    $heat_username = 'heat'
    $heat_verbose = false
+   $horizon_secret_key = ''
 ##################
    $enable_proxy_headers_parsing = true
 ##################
