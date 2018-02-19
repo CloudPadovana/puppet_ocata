@@ -182,8 +182,10 @@ class controller_ocata::params ($cloud_role){
    $ceilometer_username = 'ceilometer'
    $ceilometer_verbose = false
 ####
-   $ceilometer_meter_dispatchers = 'database'
-   $ceilometer_event_dispatchers = 'database'
+   $ceilometer_meter_dispatchers = [ 'database', 'gnocchi' ]
+   $ceilometer_event_dispatchers = [ 'database', 'gnocchi' ]
+   $ceilometer__dispatcher_gnocchi__archive_policy = "low"
+   $ceilometer__dispatcher_gnocchi__filter_service_activity = true
 ####
    $ceph_glance_api_version = '2'
    $ceph_rados_connect_timeout = '-1'
