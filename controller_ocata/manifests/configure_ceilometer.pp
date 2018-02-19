@@ -10,6 +10,7 @@ class controller_ocata::configure_ceilometer inherits controller_ocata::params {
  $ceilometerpackages = [ "openstack-ceilometer-collector",
                          "openstack-ceilometer-notification",
                          "openstack-ceilometer-central", 
+                         "python2-gnocchiclient",
                          "python2-ceilometerclient" ]
 
  package { $ceilometerpackages: ensure => "installed" }
@@ -34,6 +35,46 @@ define remove_config ($conf_file, $section, $param, $value) {
        }
                                                                                                                                              
   
+define do_augeas_config ($conf_file, $section, $param) {
+  $split = split($name, ':')
+  $value = $split[-1]
+  $index = $split[-2]
+
+  augeas { "augeas/${conf_file}/${section}/${param}/${index}/${name}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "set ${section}/${param}[${index}] ${value}" ],
+    onlyif  => "get ${section}/${param}[${index}] != ${value}"
+  }
+}
+
+define do_config_list (
+  $conf_file = '/etc/ceilometer/ceilometer.conf',
+  $section = 'DEFAULT',
+  $param,
+  $values
+) {
+
+  $values_size = size($values)
+
+  # remove the entire block if the size doesn't match
+  augeas { "remove_${conf_file}_${section}_${param}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "rm ${section}/${param}" ],
+    onlyif  => "match ${section}/${param} size > ${values_size}"
+  }
+
+  $namevars = array_to_namevars($values, "${conf_file}:${section}:${param}")
+
+  # check each value
+  do_augeas_config { $namevars:
+    conf_file => $conf_file,
+    section => $section,
+    param => $param
+  }
+}
+
 
                                                                                                                                   
 # ceilometer.conf
@@ -73,8 +114,34 @@ do_config { 'ceilometer_transport_url': conf_file => '/etc/ceilometer/ceilometer
    do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'service_credentials', param => 'cafile', value => $controller_ocata::params::cafile,
  }
   
-  do_config { 'ceilometer_meter_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'meter_dispatchers', value => $controller_ocata::params::ceilometer_meter_dispatchers, }
-   do_config { 'ceilometer_event_dispatchers': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'DEFAULT', param => 'event_dispatchers', value => $controller_ocata::params::ceilometer_event_dispatchers, }
+
+  do_config_list { 'ceilometer_meter_dispatchers':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section   => 'DEFAULT',
+    param     => 'meter_dispatchers',
+    values    => $controller_ocata::params::ceilometer_meter_dispatchers,
+  }
+
+  do_config_list { 'ceilometer_event_dispatchers':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section   => 'DEFAULT',
+    param     => 'event_dispatchers',
+    values    => $controller_ocata::params::ceilometer_event_dispatchers,
+  }
+
+  do_config { 'ceilometer__dispatcher_gnocchi__filter_service_activity':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section => 'dispatcher_gnocchi',
+    param => 'filter_service_activity',
+    value => $controller_ocata::params::ceilometer__dispatcher_gnocchi__filter_service_activity,
+  }
+
+  do_config { 'ceilometer__dispatcher_gnocchi__archive_policy':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section => 'dispatcher_gnocchi',
+    param => 'archive_policy',
+    value => $controller_ocata::params::ceilometer__dispatcher_gnocchi__archive_policy,
+  }
 
 #######Proxy headers parsing
 do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_ocata::params::enable_proxy_headers_parsing, }
