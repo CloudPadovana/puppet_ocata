@@ -105,13 +105,13 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       value     => 'password,token,mapped,openid',
     }
 
-    do_config { "keystone_federation_sso":
+    do_config_list { "keystone_trusted_dashboards":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
-      value     => "https://${site_fqdn}/dashboard/auth/websso/",
+      values    => [ "https://<%=@site_fqdn-%>/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
     }
-
+    
     do_config { "keystone_shib_attr":
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'mapped',
@@ -119,13 +119,6 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       value     => 'Shib-Identity-Provider',
     }
 
-    do_config_list {
-      conf_file => '/etc/keystone/keystone.conf',
-      section   => 'federation',
-      param     => 'trusted_dashboard',
-      values    => [ "https://<%=@site_fqdn-%>/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
-    }
-    
     file { "/etc/keystone/policy.json":
       ensure   => file,
       owner    => "keystone",
