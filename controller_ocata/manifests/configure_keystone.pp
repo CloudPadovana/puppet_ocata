@@ -23,7 +23,7 @@ define remove_config ($conf_file, $section, $param, $value) {
        }
                                                                                                                                              
 define do_augeas_config ($conf_file, $section, $param) {
-  $split = split($name, ':')
+  $split = split($name, '~')
   $value = $split[-1]
   $index = $split[-2]
 
@@ -46,7 +46,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
     onlyif  => "match ${section}/${param} size > ${values_size}"
   }
 
-  $namevars = array_to_namevars($values, "${conf_file}:${section}:${param}")
+  $namevars = array_to_namevars($values, "${conf_file}~${section}~${param}", "~")
 
   # check each value
   do_augeas_config { $namevars:
@@ -109,7 +109,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
-      values    => [ "https://<%=@site_fqdn-%>/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
+      values    => [ "https://${site_fqdn}/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
     }
     
     do_config { "keystone_shib_attr":
