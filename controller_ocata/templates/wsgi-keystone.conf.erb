@@ -16,8 +16,8 @@ Listen 35357
     WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
     WSGIPassAuthorization On
     WSGIApplicationGroup  %{GLOBAL}
-    WSGIDaemonProcess     keystone-infn-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-    WSGIProcessGroup      keystone-infn-public
+    WSGIDaemonProcess     keystone-unipd-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-unipd-main
+    WSGIProcessGroup      keystone-unipd-public
 
 
     <Directory /usr/bin>
@@ -27,18 +27,6 @@ Listen 35357
     </Directory>
 
 <% if @enable_aai_ext -%>
-    # INFN AAI setup
-    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
-        AuthType            shibboleth
-        Require             shib-session
-        ShibRequestSetting  requireSession 1
-        ShibRequestSetting  applicationId unipd_app
-        ShibRequestSetting  entityID <%=@infnaai_ent_id%>
-        ShibRequireSession  On
-        ShibExportAssertion Off
-    </Location>
-
-    # Unipd AAI setup
     <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
         AuthType            shibboleth
         Require             shib-session
@@ -66,8 +54,8 @@ Listen 35357
     WSGIScriptAlias       / /usr/bin/keystone-wsgi-public
     WSGIPassAuthorization On
     WSGIApplicationGroup  %{GLOBAL}
-    WSGIDaemonProcess     keystone-unipd-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-    WSGIProcessGroup      keystone-unipd-public
+    WSGIDaemonProcess     keystone-infn-public processes=5 threads=1 user=keystone group=keystone display-name=keystone-infn-main
+    WSGIProcessGroup      keystone-infn-public
 
 
     <Directory /usr/bin>
@@ -77,24 +65,12 @@ Listen 35357
     </Directory>
 
 <% if @enable_aai_ext -%>
-    # INFN AAI setup
     <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/infnaai/protocols/mapped/websso">
         AuthType            shibboleth
         Require             shib-session
         ShibRequestSetting  requireSession 1
         ShibRequestSetting  applicationId default
         ShibRequestSetting  entityID <%=@infnaai_ent_id%>
-        ShibRequireSession  On
-        ShibExportAssertion Off
-    </Location>
-
-    # Unipd AAI setup
-    <Location ~ "/v3/auth/OS-FEDERATION/identity_providers/unipdaai/protocols/mapped/websso">
-        AuthType            shibboleth
-        Require             shib-session
-        ShibRequestSetting  requireSession 1
-        ShibRequestSetting  applicationId default
-        ShibRequestSetting  entityID <%=@unipdaai_ent_id%>
         ShibRequireSession  On
         ShibExportAssertion Off
     </Location>
