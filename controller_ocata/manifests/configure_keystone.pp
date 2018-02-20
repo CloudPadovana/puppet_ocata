@@ -22,7 +22,40 @@ define remove_config ($conf_file, $section, $param, $value) {
                    }
        }
                                                                                                                                              
-                                                                                                                                 
+define do_augeas_config ($conf_file, $section, $param) {
+  $split = split($name, ':')
+  $value = $split[-1]
+  $index = $split[-2]
+
+  augeas { "augeas/${conf_file}/${section}/${param}/${index}/${name}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "set ${section}/${param}[${index}] ${value}" ],
+    onlyif  => "get ${section}/${param}[${index}] != ${value}"
+  }
+}
+
+define do_config_list ($conf_file, $section, $param, $values) {
+  $values_size = size($values)
+
+  # remove the entire block if the size doesn't match
+  augeas { "remove_${conf_file}_${section}_${param}":
+    lens    => "PythonPaste.lns",
+    incl    => $conf_file,
+    changes => [ "rm ${section}/${param}" ],
+    onlyif  => "match ${section}/${param} size > ${values_size}"
+  }
+
+  $namevars = array_to_namevars($values, "${conf_file}:${section}:${param}")
+
+  # check each value
+  do_augeas_config { $namevars:
+    conf_file => $conf_file,
+    section => $section,
+    param => $param
+  }
+}
+
 # keystone.conf
    do_config { 'keystone_admin_token': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'admin_token', value => $controller_ocata::params::admin_token, }
 
@@ -86,8 +119,12 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       value     => 'Shib-Identity-Provider',
     }
 
-
-
+    do_config_list {
+      conf_file => '/etc/keystone/keystone.conf',
+      section   => 'federation',
+      param     => 'trusted_dashboard',
+      values    => [ "https://<%=@site_fqdn-%>/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
+    }
     
     file { "/etc/keystone/policy.json":
       ensure   => file,
