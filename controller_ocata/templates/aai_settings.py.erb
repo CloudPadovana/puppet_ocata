@@ -29,3 +29,6 @@ MANAGERS = (
 HORIZON_CONFIG['identity_providers']['infn_sso']['region'] = 'https://<%=@site_fqdn%>:5000/v3'
 HORIZON_CONFIG['identity_providers']['unipd_sso']['region'] = 'https://cloudveneto.ict.unipd.it:5000/v3'
 
+HORIZON_CONFIG['identity_providers']['infn_sso']['path'] = 'https://<%=@site_fqdn%>/dashboard-infn/auth/register/'
+HORIZON_CONFIG['identity_providers']['unipd_sso']['path'] = 'https://cloudveneto.ict.unipd.it/dashboard-unipd/auth/register/'
+
