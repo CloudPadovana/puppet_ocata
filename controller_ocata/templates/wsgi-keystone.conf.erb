@@ -1,8 +1,8 @@
 Listen 5000
 Listen 35357
 
-<VirtualHost cloudveneto.ict.unipd.it:5000>
-    ServerName       https://cloudveneto.ict.unipd.it:5000
+<VirtualHost <%=@cv_site_fqdn-%>:5000>
+    ServerName       https://<%=@cv_site_fqdn-%>:5000
     UseCanonicalName On
     LimitRequestBody 114688
 

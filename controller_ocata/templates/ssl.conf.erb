@@ -52,7 +52,7 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
 </VirtualHost>
 
 <VirtualHost _default_:444>
-    ServerName       cloudveneto.ict.unipd.it
+    ServerName       <%=@cv_site_fqdn-%>
     UseCanonicalName On
     RedirectMatch    permanent  ^/$ /dashboard
 

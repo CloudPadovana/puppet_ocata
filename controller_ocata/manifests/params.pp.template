@@ -6,11 +6,11 @@ class controller_ocata::params ($cloud_role){
    ##########################################
    # Cloud di produzione
    $site_fqdn = "cloud-areapd.pd.infn.it"
+   $cv_site_fqdn = "cloudveneto.ict.unipd.it"
    $admin_password = ''
    $admin_token = ''
    $auth_uri = 'http://xxx.xxx.xxx.xxx:5000'
    $auth_url = 'http://xxx.xxx.xxx.xxx:35357'
-   $site_fqdn = ''
    ######
    $placement_auth_url = ''
    #########
@@ -87,11 +87,11 @@ class controller_ocata::params ($cloud_role){
    ##########################################
    # Cloud di test
    $site_fqdn = "cloud-areapd-test.pd.infn.it"
+   $cv_site_fqdn = "cloudveneto-test.ict.unipd.it"
    $admin_password = ''
    $admin_token = ''
    $auth_uri = ''
    $auth_url = ''
-   $site_fqdn = ''
    ######
    $placement_auth_url = ''
    #########

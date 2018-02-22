@@ -109,7 +109,7 @@ do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone
       conf_file => '/etc/keystone/keystone.conf',
       section   => 'federation',
       param     => 'trusted_dashboard',
-      values    => [ "https://${site_fqdn}/dashboard/auth/websso/", "https://cloudveneto.ict.unipd.it/dashboard/auth/websso/" ],
+      values    => [ "https://${site_fqdn}/dashboard/auth/websso/", "https://${cv_site_fqdn}/dashboard/auth/websso/" ],
     }
     
     do_config { "keystone_shib_attr":

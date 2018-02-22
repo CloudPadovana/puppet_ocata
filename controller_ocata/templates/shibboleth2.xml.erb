@@ -43,8 +43,8 @@
                                 key="/etc/shibboleth/sp-key.pem"
                                 certificate="/etc/shibboleth/sp-cert.pem" />
 
-        <ApplicationOverride id="unipd_app" entityID="https://cloudveneto.ict.unipd.it:8444/dashboard-shib">
-            <Errors redirectErrors="https://cloudveneto.ict.unipd.it:8444/dashboard/auth/auth_error/"/>
+        <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
+            <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
         </ApplicationOverride>
 
     </ApplicationDefaults>
