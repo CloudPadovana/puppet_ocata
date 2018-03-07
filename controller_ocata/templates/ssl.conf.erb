@@ -1,5 +1,5 @@
 Listen 443 https
-Listen 444 https
+Listen 1443 https
 
 SSLPassPhraseDialog     exec:/usr/libexec/httpd-ssl-pass-dialog
 
@@ -51,7 +51,7 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
 
 </VirtualHost>
 
-<VirtualHost _default_:444>
+<VirtualHost _default_:1443>
     ServerName       <%=@cv_site_fqdn%>
     UseCanonicalName On
     RedirectMatch    permanent  ^/$ /dashboard
