@@ -77,11 +77,19 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
   ### Patch for AAI testing IdP
 
     if $::controller_ocata::cloud_role == "is_test" {
-      exec { "patch_aai_testing_idp":
+
+      exec { "patch_infnaai_testing_idp":
         command => "/bin/sed -i 's|idp.infn.it/saml2|idp.infn.it/testing/saml2|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py",
         unless  => "/bin/grep idp.infn.it/testing/saml2 /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py 2>/dev/null >/dev/null",
         require => Package["openstack-auth-${aai_ext_flavor}"],
       }
+
+      exec { "patch_unipdaai_testing_idp":
+        command => "/bin/sed -i 's|shibidp.cca.unipd.it|shibidpdev.cca.unipd.it|g' /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py",
+        unless  => "/bin/grep shibidpdev.cca.unipd.it /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.d/_1001_${aai_ext_flavor}_settings.py 2>/dev/null >/dev/null",
+        require => Package["openstack-auth-${aai_ext_flavor}"],
+      }
+
     }
 
   }

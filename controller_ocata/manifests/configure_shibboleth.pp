@@ -28,6 +28,24 @@ class controller_ocata::configure_shibboleth inherits controller_ocata::params {
     tag      => ["shibboleth_sec"],
   }
 
+  file { "/etc/shibboleth/sp-unipd-key.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0400',
+    source   => "${unipd_key}",
+    tag      => ["shibboleth_sec"],
+  }
+
+  file { "/etc/shibboleth/sp-unipd-cert.pem":
+    ensure   => file,
+    owner    => "shibd",
+    group    => "shibd",
+    mode     => '0600',
+    source   => "${unipd_cert}",
+    tag      => ["shibboleth_sec"],
+  }
+
   file { "/etc/shibboleth/attribute-map.xml":
     ensure   => file,
     owner    => "root",

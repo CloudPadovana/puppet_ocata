@@ -42,12 +42,26 @@
         <AttributeResolver type="Query" subjectMatch="true"/>
         <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 
-        <CredentialResolver type="File" 
-                                key="/etc/shibboleth/sp-key.pem"
-                                certificate="/etc/shibboleth/sp-cert.pem" />
+        <CredentialResolver type="File">
+            <Key><Path>/etc/shibboleth/sp-key.pem</Path></Key>
+            <Certificate>
+                <Path>/etc/shibboleth/sp-cert.pem</Path>
+                <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+            </Certificate>
+        </CredentialResolver>
 
         <ApplicationOverride id="unipd_app" entityID="https://<%=@cv_site_fqdn-%>/dashboard-shib">
+
             <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
+
+            <CredentialResolver type="File">
+                <Key><Path>/etc/shibboleth/sp-unipd-key.pem</Path></Key>
+                <Certificate>
+                    <Path>/etc/shibboleth/sp-unipd-cert.pem</Path>
+                    <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+                </Certificate>
+            </CredentialResolver>
+
         </ApplicationOverride>
 
     </ApplicationDefaults>
