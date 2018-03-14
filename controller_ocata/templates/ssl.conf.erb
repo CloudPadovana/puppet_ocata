@@ -47,6 +47,12 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
             ShibRequestSetting applicationId default
             ShibRequestSetting entityID <%=@infnaai_ent_id%>
         </Location>
+
+        <Location /Shibboleth.sso>
+            AuthType None
+            Require all granted
+            ShibRequestSetting applicationId default
+        </Location>
     <% end -%>
 
 </VirtualHost>
@@ -85,6 +91,12 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
             ShibRequestSetting requireSession 1
             ShibRequestSetting applicationId unipd_app
             ShibRequestSetting entityID <%=@unipdaai_ent_id%>
+        </Location>
+
+        <Location /Shibboleth.sso>
+            AuthType None
+            Require all granted
+            ShibRequestSetting applicationId unipd_app
         </Location>
     <% end -%>
 
