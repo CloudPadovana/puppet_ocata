@@ -31,10 +31,16 @@ Listen 35357
         AuthType            shibboleth
         Require             shib-session
         ShibRequestSetting  requireSession 1
-        ShibRequestSetting  applicationId unipd_app
+        ShibRequestSetting  applicationId unipd_ssoapp
         ShibRequestSetting  entityID <%=@unipdaai_ent_id%>
         ShibRequireSession  On
         ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId unipd_ssoapp
     </Location>
 <% end -%>
 </VirtualHost>
@@ -73,6 +79,12 @@ Listen 35357
         ShibRequestSetting  entityID <%=@infnaai_ent_id%>
         ShibRequireSession  On
         ShibExportAssertion Off
+    </Location>
+
+    <Location /Shibboleth.sso>
+        AuthType shibboleth
+        Require shib-session
+        ShibRequestSetting applicationId default
     </Location>
 <% end -%>
 </VirtualHost>

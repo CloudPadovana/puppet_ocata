@@ -64,6 +64,20 @@
 
         </ApplicationOverride>
 
+        <ApplicationOverride id="unipd_ssoapp" entityID="https://<%=@cv_site_fqdn-%>:5000/v3">
+
+            <Errors redirectErrors="https://<%=@cv_site_fqdn-%>/dashboard/auth/auth_error/"/>
+
+            <CredentialResolver type="File">
+                <Key><Path>/etc/shibboleth/sp-unipd-key.pem</Path></Key>
+                <Certificate>
+                    <Path>/etc/shibboleth/sp-unipd-cert.pem</Path>
+                    <Path>/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem</Path>
+                </Certificate>
+            </CredentialResolver>
+
+        </ApplicationOverride>
+
     </ApplicationDefaults>
     
     <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
