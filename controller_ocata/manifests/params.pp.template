@@ -342,6 +342,7 @@ class controller_ocata::params ($cloud_role){
   $cap_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/openstack-security-integrations_centos7_ocata.repo"
   $aai_ext_flavor = "cap"
   $notification_plan = "5,10,20"
+  $help_url = "https://${site_fqdn}/Users_Guide/html-desktop/"
 
   ############################################################################
   #  Shibboleth params
