@@ -28,6 +28,13 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
     SSLCertificateKeyFile <%=@host_key%>
     SSLCACertificateFile  <%=@cafile%>
 
+    DocumentRoot "/var/www/"
+    <Directory "/var/www/">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Require all granted
+    </Directory>
+
     <Files ~ "\.(cgi|shtml|phtml|php3?)$">
         SSLOptions +StdEnvVars
     </Files>
@@ -72,6 +79,13 @@ SSLCipherSuite          HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
     SSLCertificateFile    <%=@unipd_cert%>
     SSLCertificateKeyFile <%=@unipd_key%>
     SSLCACertificateFile  <%=@cafile%>
+
+    DocumentRoot "/var/www/"
+    <Directory "/var/www/">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Require all granted
+    </Directory>
 
     <Files ~ "\.(cgi|shtml|phtml|php3?)$">
         SSLOptions +StdEnvVars
