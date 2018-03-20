@@ -55,6 +55,15 @@ class controller_ocata::configure_horizon inherits controller_ocata::params {
       content  => template("controller_ocata/aai_settings.py.erb"),
     }
 
+    file { "/etc/openstack-auth-shib/notifications/notifications_en.txt":
+      ensure   => file,
+      owner    => "root",
+      group    => "root",
+      mode     => '0644',
+      content  => template("controller_ocata/notifications_en.txt.erb"),
+      require  => Package["openstack-auth-${aai_ext_flavor}"],
+    }
+
 
   ### DB Creation if not exist and grant privileges.
 
