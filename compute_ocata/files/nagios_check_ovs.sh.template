@@ -12,7 +12,7 @@ ovs_status=`/usr/bin/systemctl status openvswitch | tr '\n' ';'`
 ovs_status_retcode=$?
 overall_msg=${ovs_status}
 if [ $ovs_status_retcode -ne 0 ]; then
-  echo -e "$hostname\tOpenvSwitch\t2\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf}
+  echo -e "$hostname\tOpenvSwitch\t2\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf} 2>&1 | logger
   exit
 fi
 
@@ -37,5 +37,5 @@ if [ $ret2code == 2 ]; then
 else
    retcode=0
 fi
-echo -e "$hostname\tOpenvSwitch\t${retcode}\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf}
+echo -e "$hostname\tOpenvSwitch\t${retcode}\t${overall_msg}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf} 2>&1 | logger
 
