@@ -9,5 +9,5 @@ hostname=`/bin/hostname -s`
 #                                                                                                                             
 kvm_status=`/usr/local/bin/check_kvm`
 kvm_status_retcode=$?
-echo -e "$hostname\tKVM\t${kvm_status_retcode}\t${kvm_status}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf}
+echo -e "$hostname\tKVM\t${kvm_status_retcode}\t${kvm_status}\n" | /usr/sbin/send_nsca -H ${nagios_server} -c ${nagios_conf} 2>&1 | logger
 
