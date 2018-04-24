@@ -10,6 +10,9 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
 
   # setup firewall
     class {'compute_ocata::firewall':}
+
+  # setup bacula
+    class {'compute_ocata::bacula':}
   
   # setup libvirt
     class {'compute_ocata::libvirt':}
@@ -112,7 +115,8 @@ class compute_ocata ($cloud_role_foreman = "undefined") {
              #Service["openvswitch"] -> Exec['create_bridge']
              Class['compute_ocata::firewall'] ->  Class['compute_ocata::systemsetting']
              Class['compute_ocata::systemsetting'] -> Class['compute_ocata::install']
-             Class['compute_ocata::install'] -> Class['compute_ocata::nova']
+             Class['compute_ocata::install'] -> Class['compute_ocata::bacula']
+             Class['compute_ocata::bacula'] -> Class['compute_ocata::nova']
              Class['compute_ocata::nova'] -> Class['compute_ocata::neutron']
              Class['compute_ocata::neutron'] -> Class['compute_ocata::ceph']
              Class['compute_ocata::neutron'] -> Class['compute_ocata::nagiossetting']

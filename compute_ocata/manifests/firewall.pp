@@ -73,4 +73,10 @@ class compute_ocata::firewall inherits compute_ocata::params {
     unless=> "/usr/bin/firewall-cmd --direct --get-all-rules | grep \"ipv4 filter INPUT 0 -p gre -j ACCEPT\"  | wc -l | xargs test 1 -eq",
        }
 
+# Bacula
+  exec { "open-9102":
+    command=> "/usr/bin/firewall-cmd --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.84.143.133/32\" port protocol=\"tcp\" port=\"9102\" accept'; /usr/bin/firewall-cmd --permanent --zone=public --add-rich-rule='rule family=\"ipv4\" source address=\"192.84.143.133/32\" port protocol=\"tcp\" port=\"9102\" accept'",
+    unless=> "/usr/bin/firewall-cmd --list-rich-rules | grep 9102| wc -l | xargs test 1 -eq",
+}
+       
 }

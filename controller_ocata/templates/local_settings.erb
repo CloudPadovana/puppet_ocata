@@ -151,6 +151,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_PORT = 25
 #EMAIL_HOST_USER = 'djangomail'
 #EMAIL_HOST_PASSWORD = 'top-secret!'
+EMAIL_SUBJECT_PREFIX = '[CloudVeneto] '
 
 # For multiple regions uncomment this configuration, and add (endpoint, title).
 #AVAILABLE_REGIONS = [
@@ -160,7 +161,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 OPENSTACK_HOST = "<%=@site_fqdn-%>" 
 OPENSTACK_KEYSTONE_URL = "https://%s:5000/v3" % OPENSTACK_HOST
-OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "Member"
 
 # Enables keystone web single-sign-on if set to True.
 #WEBSSO_ENABLED = False

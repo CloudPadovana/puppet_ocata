@@ -47,7 +47,8 @@ $cloud_role = $compute_ocata::params::cloud_role
 
 
 #######
-  $neutronpackages = [   "openstack-neutron-openvswitch",
+  $neutronpackages = [   "openstack-neutron",
+                         "openstack-neutron-openvswitch",
                          "openstack-neutron-common",
                          "openstack-neutron-ml2" ]
   package { $neutronpackages: ensure => "installed" }
@@ -76,25 +77,25 @@ $cloud_role = $compute_ocata::params::cloud_role
                     }
  
 if $::compute_ocata::cloud_role == "is_prod_localstorage" or $::compute_ocata::cloud_role ==  "is_prod_sharedstorage" {                             
-  yumrepo { "glusterfs-epel":
-          baseurl=> "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/$::architecture/",
-          descr=> "GlusterFS is a clustered file-system capable of scaling to several petabytes",
-          enabled=> 1,
-          gpgcheck=> 1,
-          gpgkey=> 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
-            }
+#  yumrepo { "glusterfs-epel":
+#          baseurl=> "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/$::architecture/",
+#          descr=> "GlusterFS is a clustered file-system capable of scaling to several petabytes",
+#          enabled=> 1,
+#          gpgcheck=> 1,
+#          gpgkey=> 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
+#           }
 
-   yumrepo { "glusterfs-noarch-epel":
-          baseurl             => "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/noarch/",
-          descr               => "GlusterFS is a clustered file-system capable of scaling to several petabytes",
-          enabled             => 1,
-          gpgcheck            => 1,
-          gpgkey              => 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
-            }
+#   yumrepo { "glusterfs-noarch-epel":
+#          baseurl             => "http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/epel-7/noarch/",
+#          descr               => "GlusterFS is a clustered file-system capable of scaling to several petabytes",
+#          enabled             => 1,
+#          gpgcheck            => 1,
+#          gpgkey              => 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.4/EPEL.repo/pub.key',
+#            }
 
    package { 'glusterfs-fuse':
               ensure => 'installed',
-              require => [ Yumrepo["glusterfs-epel"], Yumrepo["glusterfs-noarch-epel"] ]
+ #             require => [ Yumrepo["glusterfs-epel"], Yumrepo["glusterfs-noarch-epel"] ]
            }
                                                                                      } ###chiudo if 
 }

@@ -88,14 +88,14 @@ class compute_ocata::service inherits compute_ocata::params {
                             require     => Package["openstack-nova-common"],
                        }
                        
-                  # mount glusterfs volume
+                  # mount NFS file system
                   mount { "/var/lib/nova/instances":
                             ensure      => mounted,
-                            device      => "$compute_ocata::params::volume_glusterfs_ip:/$compute_ocata::params::volume_glusterfs",
+                            device      => "192.168.61.180:nova",
                             atboot      => true,
-                            fstype      => "glusterfs",
-                            options     => "defaults,log-level=ERROR,_netdev,backup-volfile-servers=$compute_ocata::params::volume_glusterfs_log_ip",
-                            require     => [ File["nova-instances"], Package ["glusterfs-fuse"] ]
+                            fstype      => "nfs",
+                            options     => "vers=4,intr",
+                            require     => [ File["nova-instances"] ]
                         }
     }
 
