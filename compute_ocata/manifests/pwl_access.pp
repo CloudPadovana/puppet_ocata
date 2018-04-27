@@ -14,6 +14,14 @@ include compute_ocata::params
         require	=> Package["openstack-nova-common"],
        }
 
+# Needed to attach equallogic volumes
+    exec {"nova disk membership":
+                  unless => "/bin/grep 'disk.*nova' /etc/group 2>/dev/null",
+                  command => "/sbin/usermod -G disk nova",
+                  require => User['nova'],
+         }
+         
+       
   file {"nova_sshdir":
             ensure  => "directory",
             path    => "$home_dir/.ssh",
