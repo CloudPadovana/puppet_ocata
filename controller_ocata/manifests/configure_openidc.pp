@@ -1,16 +1,10 @@
 class controller_ocata::configure_openidc inherits controller_ocata::params {
 
-  exec { "download_oidc_repo":
-    command => "/usr/bin/wget -q -O /etc/yum.repos.d/mod_auth_openidc.repo ${oidc_repo_url}",
-    creates => "/etc/yum.repos.d/mod_auth_openidc.repo",
-  }
-  
   package { "mod_auth_openidc":
     ensure  => present,
-    require => Exec["download_oidc_repo"],
   }
   
-  file { "/etc/httpd/conf.d/openidc.conf":
+  file { "/etc/httpd/conf.d/auth_openidc.conf":
     ensure   => file,
     owner    => "apache",
     group    => "apache",
@@ -19,19 +13,19 @@ class controller_ocata::configure_openidc inherits controller_ocata::params {
     tag      => ["oidc_conf"],
   }
 
-  file { "/var/lib/mod_auth_openidc":
+  file { "/var/cache/httpd/mod_auth_openidc":
     ensure  => directory,
     owner   => "apache",
     group   => "apache",
-    mode    => '0775',
+    mode    => '0770',
   }
 
-  file { "/var/lib/mod_auth_openidc/metadata":
+  file { "/var/cache/httpd/mod_auth_openidc/metadata":
     ensure  => directory,
     owner   => "apache",
     group   => "apache",
-    mode    => '0775',
-    require => File["/var/lib/mod_auth_openidc"],
+    mode    => '0770',
+    require => File["/var/cache/httpd/mod_auth_openidc"],
   }
   
   ############################################################################
@@ -39,13 +33,13 @@ class controller_ocata::configure_openidc inherits controller_ocata::params {
   ############################################################################
 
   exec { "download_metadata_indigo":
-    command => "/usr/bin/wget -q -O /var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider ${indigo_md_url}",
-    creates => "/var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider",
-    require => File["/var/lib/mod_auth_openidc/metadata"],
+    command => "/usr/bin/wget -q -O /var/cache/httpd/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider ${indigo_md_url}",
+    creates => "/var/cache/httpd/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.provider",
+    require => File["/var/cache/httpd/mod_auth_openidc/metadata"],
     tag     => ["oidc_conf"],
   }
   
-  file { "/var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.client":
+  file { "/var/cache/httpd/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.client":
     ensure   => file,
     owner    => "apache",
     group    => "apache",
@@ -54,7 +48,7 @@ class controller_ocata::configure_openidc inherits controller_ocata::params {
     tag      => ["oidc_conf"],
   }
 
-  file { "/var/lib/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.conf":
+  file { "/var/cache/httpd/mod_auth_openidc/metadata/iam-test.indigo-datacloud.eu.conf":
     ensure   => file,
     owner    => "apache",
     group    => "apache",
