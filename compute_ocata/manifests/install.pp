@@ -43,7 +43,10 @@ $cloud_role = $compute_ocata::params::cloud_role
                          "yum-plugin-priorities",
                          "ipset",
                          "sysfsutils" ]
-  package { $genericpackages: ensure => "installed" }
+  package { $genericpackages: 
+    ensure => "installed",
+    require => Package[$newrelease]
+   }
 
 
 #######
@@ -51,19 +54,28 @@ $cloud_role = $compute_ocata::params::cloud_role
                          "openstack-neutron-openvswitch",
                          "openstack-neutron-common",
                          "openstack-neutron-ml2" ]
-  package { $neutronpackages: ensure => "installed" }
+  package { $neutronpackages: 
+    ensure => "installed",
+    require => Package[$newrelease]
+  }
 
   $novapackages = [ "openstack-nova-compute",
                      "openstack-nova-common" ]
 
-  package { $novapackages: ensure => "installed" }
+  package { $novapackages: 
+    ensure => "installed",
+    require => Package[$newrelease]
+  }
   
   $ceilometerpackages = [ "openstack-ceilometer-compute",
                           "python2-wsme" ]
                            # ,
                            #"python-ceilometerclient",
                            #"python2-pecan" ]
-  package { $ceilometerpackages: ensure => "installed" }
+  package { $ceilometerpackages: 
+   ensure => "installed",
+   require => Package[$newrelease]
+  }
 
 #####nella guida di installazione a ocata per i compute sembra non ci siano python-ceilometerclient python2-pecan
 
