@@ -91,11 +91,10 @@ class compute_ocata::service inherits compute_ocata::params {
                   # mount NFS file system
                   mount { "/var/lib/nova/instances":
                             ensure      => mounted,
-                            device      => "192.168.61.180:nova",
+                            device      => "192.168.61.100:volume-nova-prod",
                             atboot      => true,
                             fstype      => "nfs",
-                            options     => "vers=4,intr",
-                            require     => [ File["nova-instances"] ]
+                            options     => "defaults"
                         }
     }
 
