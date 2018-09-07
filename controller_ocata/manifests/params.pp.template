@@ -339,7 +339,7 @@ class controller_ocata::params ($cloud_role){
   ############################################################################
   
   $enable_aai_ext = false
-  $cap_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/openstack-security-integrations_centos7_ocata.repo"
+  $cap_repo_url = "http://artifacts.pd.infn.it/packages/CAP/openstack-security-integrations_centos7_ocata.repo"
   $aai_ext_flavor = "cap"
   $notification_plan = "5,10,20"
   $help_url = "https://${site_fqdn}/Users_Guide/html-desktop/"
@@ -367,7 +367,7 @@ class controller_ocata::params ($cloud_role){
   ############################################################################
 
   $enable_oidc = false
-  $oidc_repo_url = "http://igi-01.pd.infn.it/mrepo/CAP/misc-centos7.repo"
+  $oidc_repo_url = "http://artifacts.pd.infn.it/packages/CAP/misc-centos7.repo"
   $oidc_passphrase = ""
   
   $indigo_md_url = "https://iam-test.indigo-datacloud.eu/.well-known/openid-configuration"
