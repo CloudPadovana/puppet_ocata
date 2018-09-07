@@ -36,7 +36,7 @@ class compute_ocata::systemsetting inherits compute_ocata::params {
         }
 
    package { "ca_TERENA-SSL-CA-3":
-             source   => "http://igi-01.pd.infn.it/mrepo/CAP/misc/CentOS7/current/ca_TERENA-SSL-CA-3.el7.centos.noarch.rpm",
+             source   => "http://artifacts.pd.infn.it/packages/CAP/misc/CentOS7/current/ca_TERENA-SSL-CA-3.el7.centos.noarch.rpm",
              provider => "rpm",
         }
 }

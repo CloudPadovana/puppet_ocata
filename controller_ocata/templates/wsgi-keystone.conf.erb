@@ -5,6 +5,7 @@ Listen 35357
 <VirtualHost _default_:5001>
     ServerName       https://<%=@cv_site_fqdn-%>:5000
     UseCanonicalName On
+    TraceEnable      Off
     LimitRequestBody 114688
 
     ErrorLog        "/var/log/httpd/keystone_wsgi_main_error_unipd.log"
@@ -49,6 +50,7 @@ Listen 35357
 <VirtualHost _default_:5000>
     ServerName       https://<%=@site_fqdn -%>:5000
     UseCanonicalName On
+    TraceEnable      Off
     LimitRequestBody 114688
 
     ErrorLog        "/var/log/httpd/keystone_wsgi_main_error_infn.log"
@@ -91,6 +93,7 @@ Listen 35357
 </VirtualHost>
 
 <VirtualHost *:35357>
+    TraceEnable      Off
 
     WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
     WSGIProcessGroup keystone-admin
