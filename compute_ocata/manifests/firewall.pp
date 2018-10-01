@@ -69,7 +69,7 @@ class compute_ocata::firewall inherits compute_ocata::params {
        }
 
   exec { "open-gre":
-    command=> "/usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT",
+    command=> "/usr/bin/firewall-cmd --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT; /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT",
     unless=> "/usr/bin/firewall-cmd --direct --get-all-rules | grep \"ipv4 filter INPUT 0 -p gre -j ACCEPT\"  | wc -l | xargs test 1 -eq",
        }
 
