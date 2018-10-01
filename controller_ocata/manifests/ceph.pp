@@ -25,6 +25,7 @@ class controller_ocata::ceph inherits controller_ocata::params {
             source      => 'puppet:///modules/controller_ocata/ceph.conf',
             path        => '/etc/ceph/ceph.conf',
             backup      => true,
+            require => Package["ceph-common"],
           }
 
   if $::controller_ocata::cloud_role == "is_production" {
@@ -36,6 +37,7 @@ class controller_ocata::ceph inherits controller_ocata::params {
               owner   => cinder,
               group   => cinder,
               mode    => 0640,
+              require => Package["ceph-common"],
            }
 
       file {'glance-prod.keyring':
@@ -45,7 +47,8 @@ class controller_ocata::ceph inherits controller_ocata::params {
               owner   => glance,
               group   => glance,
               mode    => 0640,
-           }
+              require => Package["ceph-common"],
+         }
 
   }                          
       
@@ -58,6 +61,7 @@ class controller_ocata::ceph inherits controller_ocata::params {
               owner   => cinder,
               group   => cinder,
               mode    => 0640,
+              require => Package["ceph-common"],
            }
 
       file {'glance-test.keyring':
@@ -67,7 +71,8 @@ class controller_ocata::ceph inherits controller_ocata::params {
               owner   => glance,
               group   => glance,
               mode    => 0640,
-           }
+              require => Package["ceph-common"],
+         }
 
   }                 
 } 

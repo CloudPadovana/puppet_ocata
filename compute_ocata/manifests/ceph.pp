@@ -24,12 +24,14 @@ class compute_ocata::ceph inherits compute_ocata::params {
               source      => 'puppet:///modules/compute_ocata/ceph.conf',
               path        => '/etc/ceph/ceph.conf',
               backup      => true,
+              require => Package["ceph-common"],
            }
 
       file {'secret.xml':
              path        => '/etc/nova/secret.xml',
              backup      => true,
-             content  => template('compute_ocata/secret.erb'),  
+             content  => template('compute_ocata/secret.erb'),
+             require => Package["openstack-nova-common"],
            }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
