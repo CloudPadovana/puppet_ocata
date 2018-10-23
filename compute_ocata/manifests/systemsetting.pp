@@ -1,4 +1,8 @@
-class compute_ocata::systemsetting inherits compute_ocata::params {
+class compute_ocata::systemsetting {
+
+# inherits compute_ocata::params {
+
+include compute_ocata::params
 
   # disable SELinux
   exec { "setenforce 0":
