@@ -35,13 +35,14 @@ class compute_ocata::ceph inherits compute_ocata::params {
            }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
-       
+           
       exec { 'get-or-set virsh secret':
               command => $cm,
               unless  => "/usr/bin/virsh secret-list | grep -i $compute_ocata::params::libvirt_rbd_secret_uuid",
               require => File['secret.xml'],
             }
 
+            
       exec { 'set-secret-value virsh':
           command => "/usr/bin/virsh secret-set-value --secret $compute_ocata::params::libvirt_rbd_secret_uuid --base64 $compute_ocata::params::libvirt_rbd_key",
         unless  => "/usr/bin/virsh secret-get-value $compute_ocata::params::libvirt_rbd_secret_uuid | grep $compute_ocata::params::libvirt_rbd_key",
