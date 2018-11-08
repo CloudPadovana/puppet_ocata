@@ -116,6 +116,9 @@ do_config { 'neutron_enable_proxy_headers_parsing': conf_file => '/etc/neutron/n
    do_config { 'ovs_local_ip': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'local_ip', value => $controller_ocata::params::ml2_local_ip, }
    do_config { 'ovs_bridge_mappings': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'bridge_mappings', value => $controller_ocata::params::ml2_bridge_mappings, }
    do_config { 'ovs_enable_tunneling': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'enable_tunneling', value => $controller_ocata::params::ovs_enable_tunneling, }
+   # The following parameter was introduced after the powercut of Nov 2018. Without this parameter we had problems with
+   # external networks
+   do_config { 'ovs_of_interface': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'ovs', param => 'of_interface', value => $controller_ocata::params::ovs_of_interface, }
        
    do_config { 'ovs_firewall_driver': conf_file => '/etc/neutron/plugins/ml2/openvswitch_agent.ini', section => 'securitygroup', param => 'firewall_driver', value => $controller_ocata::params::ml2_firewall_driver, } 
 
