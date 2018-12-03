@@ -15,7 +15,7 @@ include compute_ocata::params
   Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
   Sysctl {
           notify      => Exec["load-sysctl"],
-          require     => Class['compute_ocata::libvirt'],
+          #require     => Class['compute_ocata::libvirt'],
          }
 
    $my_sysctl_settings = {

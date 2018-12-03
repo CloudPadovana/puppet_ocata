@@ -73,6 +73,16 @@ do_config { 'ceilometer_service_credentials_cafile': conf_file => '/etc/ceilomet
 #######Proxy headers parsing
 do_config { 'ceilometer_enable_proxy_headers_parsing': conf_file => '/etc/ceilometer/ceilometer.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $compute_ocata::params::enable_proxy_headers_parsing, }
 
+
+### workload_partitioning
+  do_config { 'ceilometer_compute_workload_partitioning':
+    conf_file => '/etc/ceilometer/ceilometer.conf',
+    section => 'compute',
+    param => 'workload_partitioning',
+    value => $compute_ocata::params::ceilometer_compute_workload_partitioning,
+  }
+
+
 ### instance_discovery_method
   do_config { 'ceilometer_compute_instance_discovery_method':
     conf_file => '/etc/ceilometer/ceilometer.conf',
