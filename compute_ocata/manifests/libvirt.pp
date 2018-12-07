@@ -51,7 +51,7 @@ include compute_ocata::params
       file_line { '/etc/libvirt/qemu.conf group':
         path  => '/etc/libvirt/qemu.conf',
         line  => 'group = "nova"',
-        match => 'group =',
+        match => '^group =',
       }
 
       file_line { '/etc/libvirt/qemu.conf dynamic_ownership':
