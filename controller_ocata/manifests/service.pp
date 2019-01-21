@@ -246,7 +246,7 @@ class controller_ocata::service inherits controller_ocata::params {
            
  # Services for ceilometer
     service { "openstack-ceilometer-api":
-                   ensure      => running,
+                   ensure      => stopped,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
