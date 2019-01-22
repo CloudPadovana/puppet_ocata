@@ -253,21 +253,21 @@ class controller_ocata::service inherits controller_ocata::params {
                    subscribe   => Class['controller_ocata::configure_ceilometer'],
            }
     service { "openstack-ceilometer-notification":
-                   ensure      => running,
+                   ensure      => stopped,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
                    subscribe   => Class['controller_ocata::configure_ceilometer'],
             }          
     service { "openstack-ceilometer-central":
-                   ensure      => running,
+                   ensure      => stopped,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
                    subscribe   => Class['controller_ocata::configure_ceilometer'],
            }
     service { "openstack-ceilometer-collector":
-                   ensure      => running,
+                   ensure      => stopped,
                    enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,

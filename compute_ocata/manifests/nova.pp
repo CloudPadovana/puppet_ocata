@@ -187,8 +187,8 @@ do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.co
 #
   do_config { 'nova_instance_usage_audit': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'instance_usage_audit', value => $compute_ocata::params::nova_instance_usage_audit, }
   do_config { 'nova_instance_usage_audit_period': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'instance_usage_audit_period', value => $compute_ocata::params::nova_instance_usage_audit_period, }
-  do_config { 'nova_notify_on_state_change': conf_file => '/etc/nova/nova.conf', section => 'notifications', param => 'notify_on_state_change', value => $compute_ocata::params::nova_notify_on_state_change, }
-  do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_ocata::params::nova_notification_driver, }
+###  do_config { 'nova_notify_on_state_change': conf_file => '/etc/nova/nova.conf', section => 'notifications', param => 'notify_on_state_change', value => $compute_ocata::params::nova_notify_on_state_change, }
+###  do_config { 'nova_notification_driver': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $compute_ocata::params::nova_notification_driver, }
 
 
 # GPU specific setting for cld-dfa-gpu-01
