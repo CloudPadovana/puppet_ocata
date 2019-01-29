@@ -91,7 +91,7 @@ do_config { 'cinder_enable_proxy_headers_parsing': conf_file => '/etc/cinder/cin
 ####################       
        
 # Settings needed for ceilometer
-   do_config { 'cinder_notification_driver': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_ocata::params::cinder_notification_driver, }
+##   do_config { 'cinder_notification_driver': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_messaging_notifications', param => 'driver', value => $controller_ocata::params::cinder_notification_driver, }
 
 #
 # Sembra che i seguenti non servano piu`:
