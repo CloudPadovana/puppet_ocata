@@ -167,6 +167,9 @@ class controller_ocata::params ($cloud_role){
     
 
    }
+   
+   ### Admin account on mysql
+   $mysql_admin_password = "undefined"
 
    ##########################################
    # Attributi validi sia per la cloud di test che quella di produzione
