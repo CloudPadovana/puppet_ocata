@@ -30,9 +30,15 @@
                               backingFilePath="/var/cache/shibboleth/idp.unipd.it-testing-metadata.xml"/>
 <% end -%>
             <MetadataProvider type="XML"
+                              uri="https://idp.infn.it/saml2/idp/metadata.php"
+                              backingFilePath="/var/cache/shibboleth/idp.infn.it-metadata.xml"/>
+            <MetadataProvider type="XML"
+                              uri="https://shibidp.cca.unipd.it/idp/shibboleth"
+                              backingFilePath="/var/cache/shibboleth/idp.unipd.it-metadata.xml"/>
+            <!-- MetadataProvider type="XML"
                               uri="https://www.garr.it/idem-metadata/idem-metadata-sha256.xml"
                               backingFilePath="/var/cache/shibboleth/idem-metadata.xml"
-                              reloadInterval="7200"/>
+                              reloadInterval="7200"/ -->
         </MetadataProvider>
         
         <AttributeExtractor type="XML" 
