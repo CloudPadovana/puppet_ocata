@@ -251,15 +251,15 @@ OPENSTACK_KEYSTONE_BACKEND = {
 
 # A dictionary of settings which can be used to provide the default values for
 # properties found in the Launch Instance modal.
-#LAUNCH_INSTANCE_DEFAULTS = {
-#    'config_drive': False,
-#    'enable_scheduler_hints': True,
-#    'disable_image': False,
-#    'disable_instance_snapshot': False,
-#    'disable_volume': False,
-#    'disable_volume_snapshot': False,
-#    'create_volume': True,
-#}
+LAUNCH_INSTANCE_DEFAULTS = {
+    'config_drive': False,
+    'enable_scheduler_hints': True,
+    'disable_image': False,
+    'disable_instance_snapshot': False,
+    'disable_volume': False,
+    'disable_volume_snapshot': False,
+    'create_volume': False,
+}
 
 # The Xen Hypervisor has the ability to set the mount point for volumes
 # attached to instances (other Hypervisors currently do not). Setting
