@@ -199,7 +199,7 @@ do_config { 'nova_enable_proxy_headers_parsing': conf_file => '/etc/nova/nova.co
            conf_file => '/etc/nova/nova.conf',
            section   => 'pci',
            param     => 'alias',
-           values    => [ "$compute_ocata::params::pci_alias_1", "$compute_ocata::params::pci_alias_2" ],
+           values    => [ "$compute_ocata::params::pci_titanxp_VGA", "$compute_ocata::params::pci_titanxp_SND", "$compute_ocata::params::pci_quadro_VGA", "$compute_ocata::params::pci_quadro_Audio", "$compute_ocata::params::pci_quadro_USB", "$compute_ocata::params::pci_quadro_SerialBus", "$compute_ocata::params::pci_geforcegtx_VGA", "$compute_ocata::params::pci_geforcegtx_SND"  ],
          }
          
    
