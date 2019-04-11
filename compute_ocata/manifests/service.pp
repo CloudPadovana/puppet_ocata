@@ -58,7 +58,7 @@ class compute_ocata::service inherits compute_ocata::params {
 
         service { "openstack-ceilometer-compute":
                     ensure      => stopped,
-                    enable      => true,
+                    enable      => false,
                     hasstatus   => true,
                     hasrestart  => true,
                     require     => Package["openstack-ceilometer-compute"],
